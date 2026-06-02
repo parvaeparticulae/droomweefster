@@ -1291,6 +1291,8 @@ function showOutput(mode) {
     resultBox.style.display = 'block';
     storyBox.classList.remove('visible');
     storyBtn.style.display = 'block';
+    storyBtn.disabled = false;
+    storyBtn.textContent = '✨ Schrijf dit uit als verhaal';
   } else {
     resultBox.style.display = 'none';
     if (storyBox.textContent.trim()) {
@@ -1300,6 +1302,8 @@ function showOutput(mode) {
       storyBox.innerHTML = '<div class="generating-indicator">Klik hieronder om het verhaal te laten schrijven</div>';
       storyBox.classList.add('visible');
       storyBtn.style.display = 'block';
+      storyBtn.disabled = false;
+      storyBtn.textContent = '✨ Schrijf dit uit als verhaal';
     }
   }
 }
