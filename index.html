@@ -1268,9 +1268,13 @@ function generateResult() {
 
   document.getElementById('resultBox').textContent = r;
 
-  document.getElementById('storyBtn').style.display = 'block';
+  const storyBtn = document.getElementById('storyBtn');
+  storyBtn.style.display = 'block';
+  storyBtn.disabled = false;
+  storyBtn.textContent = '✨ Schrijf dit uit als verhaal';
   document.getElementById('storyBox').textContent = '';
   document.getElementById('storyBox').classList.remove('visible');
+  document.getElementById('resultBox').style.display = 'block';
   currentOutputMode = 'scenario';
   updateToggleUI();
 }
@@ -1590,6 +1594,15 @@ function restart() {
   document.getElementById('storyBox').textContent = '';
   document.getElementById('storyBox').classList.remove('visible');
   document.getElementById('resultBox').style.display = 'block';
+
+  const storyBtn = document.getElementById('storyBtn');
+  storyBtn.disabled = false;
+  storyBtn.textContent = '✨ Schrijf dit uit als verhaal';
+  storyBtn.style.display = 'none';
+
+  const copyBtn = document.getElementById('copyBtn');
+  copyBtn.textContent = 'Kopieer naar klembord';
+  copyBtn.classList.remove('copied');
 
   document.querySelector(`.step[data-step="${currentStep}"]`).classList.remove('active');
   currentStep = 0;
