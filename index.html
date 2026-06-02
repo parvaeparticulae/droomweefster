@@ -1,0 +1,1563 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#1a1025">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Droomweefster">
+<title>Droomweefster</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><circle cx='32' cy='32' r='30' fill='%231a1025'/><path d='M40 14a18 18 0 1 0 0 36 14 14 0 1 1 0-36z' fill='%23c39bd3'/></svg>">
+<link rel="apple-touch-icon" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='14' fill='%231a1025'/><path d='M40 14a18 18 0 1 0 0 36 14 14 0 1 1 0-36z' fill='%23c39bd3'/></svg>">
+<style>
+  :root {
+    --bg: #1a1025;
+    --card: #251535;
+    --accent: #9b59b6;
+    --accent-light: #c39bd3;
+    --accent-glow: rgba(155, 89, 182, 0.3);
+    --text: #e8dff0;
+    --text-dim: #a090b0;
+    --input-bg: #1e1230;
+    --border: #3a2850;
+    --success: #2ecc71;
+    --error: #e74c3c;
+    --tag-bg: #352548;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  /* ===== GATE SCREENS (password + 18+) ===== */
+  .gate {
+    position: fixed;
+    inset: 0;
+    background: var(--bg);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  .gate.hidden { display: none; }
+
+  .gate-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 32px 24px;
+    max-width: 420px;
+    width: 100%;
+    text-align: center;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+  }
+  .gate-moon {
+    font-size: 2.4rem;
+    margin-bottom: 12px;
+  }
+  .gate-card h2 {
+    color: var(--accent-light);
+    font-weight: 300;
+    font-size: 1.4rem;
+    letter-spacing: 0.04em;
+    margin-bottom: 8px;
+  }
+  .gate-card p {
+    color: var(--text-dim);
+    font-size: 0.88rem;
+    line-height: 1.6;
+    margin-bottom: 20px;
+  }
+  .gate-card p.small {
+    font-size: 0.78rem;
+    margin-top: 14px;
+    margin-bottom: 0;
+  }
+  .gate-input {
+    width: 100%;
+    background: var(--input-bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px;
+    color: var(--text);
+    font-family: inherit;
+    font-size: 1rem;
+    outline: none;
+    margin-bottom: 12px;
+    text-align: center;
+    letter-spacing: 0.05em;
+  }
+  .gate-input:focus { border-color: var(--accent); }
+  .gate-btn {
+    width: 100%;
+    background: var(--accent);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 14px;
+    font-family: inherit;
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .gate-btn:hover { background: #a66bbe; }
+  .gate-btn.secondary {
+    background: transparent;
+    color: var(--text-dim);
+    border: 1px solid var(--border);
+    margin-top: 8px;
+  }
+  .gate-btn.secondary:hover { color: var(--text); border-color: var(--accent); }
+  .gate-error {
+    color: var(--error);
+    font-size: 0.82rem;
+    margin-top: 8px;
+    min-height: 1em;
+  }
+
+  /* ===== APP ===== */
+  .app {
+    width: 100%;
+    max-width: 520px;
+    padding: 20px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .header {
+    text-align: center;
+    padding: 24px 0 16px;
+    position: relative;
+  }
+  .header h1 {
+    font-size: 1.6rem;
+    font-weight: 300;
+    letter-spacing: 0.05em;
+    color: var(--accent-light);
+  }
+  .header p {
+    font-size: 0.85rem;
+    color: var(--text-dim);
+    margin-top: 4px;
+  }
+  .header-actions {
+    position: absolute;
+    top: 20px;
+    right: 0;
+    display: flex;
+    gap: 6px;
+  }
+  .icon-btn {
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    width: 36px;
+    height: 36px;
+    color: var(--text-dim);
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .icon-btn:hover { border-color: var(--accent); color: var(--text); }
+
+  .progress-bar {
+    display: flex;
+    gap: 4px;
+    margin: 16px 0 24px;
+  }
+  .progress-dot {
+    flex: 1;
+    height: 3px;
+    border-radius: 2px;
+    background: var(--border);
+    transition: background 0.3s;
+  }
+  .progress-dot.active { background: var(--accent); }
+  .progress-dot.done { background: var(--accent-light); }
+
+  .step-label {
+    font-size: 0.75rem;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 8px;
+  }
+
+  .step {
+    display: none;
+    flex-direction: column;
+    gap: 16px;
+    flex: 1;
+    animation: fadeIn 0.3s ease;
+  }
+  .step.active { display: flex; }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .step h2 {
+    font-size: 1.2rem;
+    font-weight: 400;
+    color: var(--accent-light);
+  }
+  .step p.hint {
+    font-size: 0.85rem;
+    color: var(--text-dim);
+    line-height: 1.5;
+  }
+
+  .options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  .options.single-col {
+    grid-template-columns: 1fr;
+  }
+
+  .option {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: center;
+  }
+  .option:hover {
+    border-color: var(--accent);
+    box-shadow: 0 0 12px var(--accent-glow);
+  }
+  .option.selected {
+    border-color: var(--accent);
+    background: rgba(155, 89, 182, 0.15);
+    box-shadow: 0 0 16px var(--accent-glow);
+  }
+  .option .icon { font-size: 1.5rem; margin-bottom: 6px; }
+  .option .label { font-size: 0.85rem; font-weight: 500; }
+  .option .desc {
+    font-size: 0.75rem;
+    color: var(--text-dim);
+    margin-top: 4px;
+    line-height: 1.3;
+  }
+
+  .chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .chip {
+    background: var(--tag-bg);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 8px 16px;
+    font-size: 0.82rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    user-select: none;
+  }
+  .chip:hover { border-color: var(--accent); }
+  .chip.selected {
+    background: rgba(155, 89, 182, 0.2);
+    border-color: var(--accent);
+    color: var(--accent-light);
+  }
+
+  .slider-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .slider-group label {
+    font-size: 0.85rem;
+    color: var(--text-dim);
+    display: flex;
+    justify-content: space-between;
+  }
+  input[type="range"] {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 6px;
+    border-radius: 3px;
+    background: var(--border);
+    outline: none;
+  }
+  input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--accent);
+    cursor: pointer;
+    box-shadow: 0 0 8px var(--accent-glow);
+  }
+
+  textarea, input[type="text"] {
+    background: var(--input-bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px;
+    color: var(--text);
+    font-family: inherit;
+    font-size: 0.9rem;
+    resize: vertical;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  textarea:focus, input[type="text"]:focus {
+    border-color: var(--accent);
+  }
+  textarea { min-height: 80px; }
+  input[type="text"] { height: 44px; }
+
+  ::placeholder { color: var(--text-dim); opacity: 0.6; }
+
+  .nav-buttons {
+    display: flex;
+    gap: 12px;
+    margin-top: auto;
+    padding-top: 24px;
+    padding-bottom: 20px;
+  }
+  .btn {
+    flex: 1;
+    padding: 14px;
+    border: none;
+    border-radius: 12px;
+    font-family: inherit;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .btn-back {
+    background: var(--card);
+    color: var(--text-dim);
+    border: 1px solid var(--border);
+  }
+  .btn-back:hover { border-color: var(--accent); color: var(--text); }
+  .btn-next {
+    background: var(--accent);
+    color: white;
+    font-weight: 500;
+  }
+  .btn-next:hover { background: #a66bbe; box-shadow: 0 4px 16px var(--accent-glow); }
+  .btn-next:disabled { opacity: 0.4; cursor: not-allowed; }
+
+  .result-box {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 20px;
+    line-height: 1.7;
+    font-size: 0.9rem;
+    white-space: pre-wrap;
+  }
+
+  .copy-btn, .story-btn {
+    width: 100%;
+    padding: 14px;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-family: inherit;
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .copy-btn { background: var(--accent); }
+  .copy-btn:hover { background: #a66bbe; }
+  .copy-btn.copied { background: var(--success); }
+
+  .story-btn {
+    background: linear-gradient(135deg, #8e44ad, #c0392b);
+    margin-top: 10px;
+  }
+  .story-btn:hover { opacity: 0.9; }
+  .story-btn:disabled { opacity: 0.5; cursor: wait; }
+
+  .restart-btn {
+    width: 100%;
+    padding: 12px;
+    background: transparent;
+    color: var(--text-dim);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    font-family: inherit;
+    font-size: 0.85rem;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+  .restart-btn:hover { border-color: var(--accent); color: var(--text); }
+
+  .intensity-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.75rem;
+    color: var(--text-dim);
+  }
+
+  .output-toggle {
+    display: flex;
+    background: var(--input-bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 4px;
+  }
+  .output-toggle button {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    background: transparent;
+    color: var(--text-dim);
+    font-family: inherit;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .output-toggle button.active {
+    background: var(--accent);
+    color: white;
+  }
+
+  .story-box {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 24px;
+    line-height: 1.9;
+    font-size: 0.92rem;
+    white-space: pre-wrap;
+    font-style: italic;
+    display: none;
+  }
+  .story-box.visible { display: block; }
+
+  .generating-indicator {
+    text-align: center;
+    padding: 30px;
+    color: var(--accent-light);
+    font-size: 0.9rem;
+  }
+  .generating-indicator .dots::after {
+    content: '';
+    animation: dots 1.5s infinite;
+  }
+  @keyframes dots {
+    0% { content: ''; }
+    25% { content: '.'; }
+    50% { content: '..'; }
+    75% { content: '...'; }
+  }
+
+  /* ===== INSTALL MODAL ===== */
+  .modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.7);
+    z-index: 900;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  .modal-backdrop.visible { display: flex; }
+  .modal {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 24px;
+    max-width: 440px;
+    width: 100%;
+    max-height: 85vh;
+    overflow-y: auto;
+  }
+  .modal h3 {
+    color: var(--accent-light);
+    font-weight: 400;
+    font-size: 1.2rem;
+    margin-bottom: 16px;
+  }
+  .modal h4 {
+    color: var(--text);
+    font-weight: 500;
+    font-size: 0.95rem;
+    margin: 16px 0 8px;
+  }
+  .modal p, .modal li {
+    color: var(--text-dim);
+    font-size: 0.88rem;
+    line-height: 1.6;
+  }
+  .modal ol {
+    padding-left: 20px;
+    margin: 8px 0;
+  }
+  .modal ol li { margin-bottom: 6px; }
+  .modal-close {
+    margin-top: 20px;
+    width: 100%;
+    background: var(--accent);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 12px;
+    font-family: inherit;
+    font-size: 0.9rem;
+    cursor: pointer;
+  }
+  .modal-close:hover { background: #a66bbe; }
+</style>
+</head>
+<body>
+
+<!-- ============ PASSWORD GATE ============ -->
+<div class="gate" id="passwordGate">
+  <div class="gate-card">
+    <div class="gate-moon">🌙</div>
+    <h2>Droomweefster</h2>
+    <p>Deze plek is privé. Voer het wachtwoord in om verder te gaan.</p>
+    <input type="password" id="passwordInput" class="gate-input" placeholder="Wachtwoord" autocomplete="off">
+    <button class="gate-btn" onclick="checkPassword()">Open</button>
+    <div class="gate-error" id="passwordError"></div>
+  </div>
+</div>
+
+<!-- ============ 18+ DISCLAIMER ============ -->
+<div class="gate hidden" id="ageGate">
+  <div class="gate-card">
+    <div class="gate-moon">✨</div>
+    <h2>Even kort</h2>
+    <p>Deze plek bevat erotische content voor volwassenen.<br>Door verder te gaan bevestig je dat je 18 jaar of ouder bent en dat je vrijwillig kiest om expliciete inhoud te zien.</p>
+    <button class="gate-btn" onclick="acceptAge()">Ik ben 18+ en ga akkoord</button>
+    <button class="gate-btn secondary" onclick="window.location.href='https://www.google.com'">Liever niet</button>
+    <p class="small">Niets dat je hier invult wordt opgeslagen of verstuurd. Alles gebeurt op je eigen toestel.</p>
+  </div>
+</div>
+
+<!-- ============ MAIN APP ============ -->
+<div class="app" id="app" style="display:none">
+  <div class="header">
+    <div class="header-actions">
+      <button class="icon-btn" onclick="openInstallModal()" title="Op startscherm zetten">📲</button>
+      <button class="icon-btn" onclick="confirmRestart()" title="Opnieuw beginnen">↻</button>
+    </div>
+    <h1>Droomweefster</h1>
+    <p>Laat je stap voor stap leiden...</p>
+  </div>
+
+  <div class="progress-bar" id="progressBar"></div>
+
+  <!-- STAP 1: Locatie (data-step 0) -->
+  <div class="step active" data-step="0">
+    <div class="step-label">Stap 1 van 10</div>
+    <h2>Waar speelt je droom zich af?</h2>
+    <p class="hint">Kies een locatie die je aanspreekt, of beschrijf je eigen plek.</p>
+    <div class="options">
+      <div class="option" data-value="slaapkamer" onclick="selectOption(this, 'location')">
+        <div class="icon">🛏️</div>
+        <div class="label">Slaapkamer</div>
+        <div class="desc">Intiem, vertrouwd, zacht licht</div>
+      </div>
+      <div class="option" data-value="hotelkamer" onclick="selectOption(this, 'location')">
+        <div class="icon">🏨</div>
+        <div class="label">Hotelkamer</div>
+        <div class="desc">Luxe, anoniem, opwindend</div>
+      </div>
+      <div class="option" data-value="buiten" onclick="selectOption(this, 'location')">
+        <div class="icon">🌿</div>
+        <div class="label">Buiten / natuur</div>
+        <div class="desc">Verborgen plek, spanning</div>
+      </div>
+      <div class="option" data-value="bad" onclick="selectOption(this, 'location')">
+        <div class="icon">🛁</div>
+        <div class="label">Badkamer</div>
+        <div class="desc">Warm water, stoom, sensualiteit</div>
+      </div>
+      <div class="option" data-value="kantoor" onclick="selectOption(this, 'location')">
+        <div class="icon">💼</div>
+        <div class="label">Kantoor / werkplek</div>
+        <div class="desc">Verboden, spannend, stiekem</div>
+      </div>
+      <div class="option" data-value="feest" onclick="selectOption(this, 'location')">
+        <div class="icon">🥂</div>
+        <div class="label">Feest / club</div>
+        <div class="desc">Muziek, massa, anonimiteit</div>
+      </div>
+    </div>
+    <input type="text" id="locationCustom" placeholder="Of typ je eigen locatie..." oninput="handleCustomInput('locationCustom', this)">
+  </div>
+
+  <!-- STAP 2: Sfeer (data-step 1) -->
+  <div class="step" data-step="1">
+    <div class="step-label">Stap 2 van 10</div>
+    <h2>Welke sfeer hangt er?</h2>
+    <p class="hint">Kies alles wat de sfeer van je droom bepaalt.</p>
+
+    <div class="step-label" style="margin-top: 8px;">Moment</div>
+    <div class="chips" id="momentChips">
+      <div class="chip" data-value="late avond" onclick="toggleChip(this, 'moment')">Late avond</div>
+      <div class="chip" data-value="nacht" onclick="toggleChip(this, 'moment')">Diep in de nacht</div>
+      <div class="chip" data-value="ochtend" onclick="toggleChip(this, 'moment')">Luie ochtend</div>
+      <div class="chip" data-value="middag" onclick="toggleChip(this, 'moment')">Onverwacht overdag</div>
+    </div>
+
+    <div class="step-label" style="margin-top: 8px;">Verlichting</div>
+    <div class="chips" id="lightChips">
+      <div class="chip" data-value="kaarslicht" onclick="toggleChip(this, 'light')">Kaarslicht</div>
+      <div class="chip" data-value="halfdonker" onclick="toggleChip(this, 'light')">Halfdonker</div>
+      <div class="chip" data-value="pikdonker" onclick="toggleChip(this, 'light')">Pikdonker</div>
+      <div class="chip" data-value="maanlicht" onclick="toggleChip(this, 'light')">Maanlicht</div>
+      <div class="chip" data-value="fel licht" onclick="toggleChip(this, 'light')">Fel licht — alles zichtbaar</div>
+    </div>
+
+    <div class="step-label" style="margin-top: 8px;">Zintuigen</div>
+    <div class="chips" id="sensesChips">
+      <div class="chip" data-value="muziek op de achtergrond" onclick="toggleChip(this, 'senses')">Muziek</div>
+      <div class="chip" data-value="stilte, alleen ademhaling" onclick="toggleChip(this, 'senses')">Stilte</div>
+      <div class="chip" data-value="geur van parfum" onclick="toggleChip(this, 'senses')">Parfum</div>
+      <div class="chip" data-value="warmte van de haard" onclick="toggleChip(this, 'senses')">Warmte</div>
+      <div class="chip" data-value="regen tegen het raam" onclick="toggleChip(this, 'senses')">Regen</div>
+      <div class="chip" data-value="zijden lakens" onclick="toggleChip(this, 'senses')">Zijden lakens</div>
+    </div>
+  </div>
+
+  <!-- STAP 3: Wie (data-step 2) -->
+  <div class="step" data-step="2">
+    <div class="step-label">Stap 3 van 10</div>
+    <h2>Wie is bij je?</h2>
+    <p class="hint">Kies wie er in je droom verschijnt. Je mag zo specifiek zijn als je wilt.</p>
+    <div class="options">
+      <div class="option" data-value="partner" onclick="selectOption(this, 'who')">
+        <div class="icon">💑</div>
+        <div class="label">Mijn partner</div>
+        <div class="desc">Vertrouwd, maar met een nieuwe energie</div>
+      </div>
+      <div class="option" data-value="onbekende" onclick="selectOption(this, 'who')">
+        <div class="icon">🎭</div>
+        <div class="label">Mysterieuze onbekende</div>
+        <div class="desc">Geen naam, geen verleden — puur spanning</div>
+      </div>
+      <div class="option" data-value="bekende" onclick="selectOption(this, 'who')">
+        <div class="icon">⭐</div>
+        <div class="label">Een bekend persoon</div>
+        <div class="desc">Acteur, sporter, zanger, model...</div>
+      </div>
+      <div class="option" data-value="kennis" onclick="selectOption(this, 'who')">
+        <div class="icon">👤</div>
+        <div class="label">Iemand die ik ken</div>
+        <div class="desc">Vriend, collega, kennis, buurman...</div>
+      </div>
+      <div class="option" data-value="fictief" onclick="selectOption(this, 'who')">
+        <div class="icon">✨</div>
+        <div class="label">Fictief personage</div>
+        <div class="desc">Een verzonnen persoon, helemaal naar wens</div>
+      </div>
+      <div class="option" data-value="meerdere" onclick="selectOption(this, 'who')">
+        <div class="icon">👥</div>
+        <div class="label">Meerdere personen</div>
+        <div class="desc">Alle aandacht op jou, of juist toekijken</div>
+      </div>
+    </div>
+
+    <div class="step-label" style="margin-top: 12px;">Naam (optioneel)</div>
+    <input type="text" id="whoName" placeholder="Geef een naam op — echt of verzonnen..." oninput="handleCustomInput('whoName', this)">
+
+    <textarea id="whoDetail" placeholder="Wie is het precies? Bv. 'die acteur uit...', 'mijn collega met de blauwe ogen', 'een Italiaanse vreemdeling genaamd Marco'..." oninput="handleCustomInput('whoDetail', this)"></textarea>
+  </div>
+
+  <!-- STAP 4: Beschrijf jezelf (data-step 3) -->
+  <div class="step" data-step="3">
+    <div class="step-label">Stap 4 van 10</div>
+    <h2>Hoe zie jij eruit in deze droom?</h2>
+    <p class="hint">Hoe wil je jezelf zien? Alles mag — dit is jouw fantasie.</p>
+
+    <div class="step-label" style="margin-top: 4px;">Kleding / staat</div>
+    <div class="chips" id="selfClothingChips">
+      <div class="chip" data-value="verleidelijke lingerie" onclick="toggleChip(this, 'selfClothing')">Lingerie</div>
+      <div class="chip" data-value="een lang zijden gewaad" onclick="toggleChip(this, 'selfClothing')">Zijden gewaad</div>
+      <div class="chip" data-value="strak jurkje" onclick="toggleChip(this, 'selfClothing')">Strak jurkje</div>
+      <div class="chip" data-value="naakt" onclick="toggleChip(this, 'selfClothing')">Naakt</div>
+      <div class="chip" data-value="zijn/haar overhemd" onclick="toggleChip(this, 'selfClothing')">Zijn/haar overhemd</div>
+      <div class="chip" data-value="leer of latex" onclick="toggleChip(this, 'selfClothing')">Leer / latex</div>
+      <div class="chip" data-value="halsband" onclick="toggleChip(this, 'selfClothing')">Halsband</div>
+      <div class="chip" data-value="kousen en jarretels" onclick="toggleChip(this, 'selfClothing')">Kousen & jarretels</div>
+    </div>
+
+    <div class="step-label" style="margin-top: 10px;">Hoe voel je je?</div>
+    <div class="chips" id="selfMoodChips">
+      <div class="chip" data-value="zelfverzekerd en verleidelijk" onclick="toggleChip(this, 'selfMood')">Zelfverzekerd</div>
+      <div class="chip" data-value="verlegen maar nieuwsgierig" onclick="toggleChip(this, 'selfMood')">Verlegen</div>
+      <div class="chip" data-value="onderdanig en gewillig" onclick="toggleChip(this, 'selfMood')">Onderdanig</div>
+      <div class="chip" data-value="uitdagend en brutaal" onclick="toggleChip(this, 'selfMood')">Uitdagend</div>
+      <div class="chip" data-value="overgegeven, volledig in vertrouwen" onclick="toggleChip(this, 'selfMood')">Overgegeven</div>
+      <div class="chip" data-value="hongerig en ongeduldig" onclick="toggleChip(this, 'selfMood')">Hongerig</div>
+    </div>
+
+    <div class="step-label" style="margin-top: 10px;">Uiterlijk</div>
+    <div class="chips" id="selfLookChips">
+      <div class="chip" data-value="los haar" onclick="toggleChip(this, 'selfLook')">Los haar</div>
+      <div class="chip" data-value="opgestoken haar / paardenstaart" onclick="toggleChip(this, 'selfLook')">Opgestoken haar</div>
+      <div class="chip" data-value="make-up, rode lippen" onclick="toggleChip(this, 'selfLook')">Opgemaakt</div>
+      <div class="chip" data-value="naturel, net uit bed" onclick="toggleChip(this, 'selfLook')">Naturel</div>
+      <div class="chip" data-value="parfum, net gedoucht" onclick="toggleChip(this, 'selfLook')">Net gedoucht</div>
+      <div class="chip" data-value="bezweet, verhit" onclick="toggleChip(this, 'selfLook')">Bezweet & verhit</div>
+    </div>
+
+    <textarea id="selfCustom" placeholder="Andere details over hoe je eruitziet of je voelt..." oninput="handleCustomInput('selfExtra', this)"></textarea>
+  </div>
+
+  <!-- STAP 5: Beschrijf de ander(en) (data-step 4) -->
+  <div class="step" data-step="4">
+    <div class="step-label">Stap 5 van 10</div>
+    <h2>Hoe ziet de ander eruit?</h2>
+    <p class="hint">Beschrijf degene die bij je is. Hoe gedetailleerder, hoe levendiger de droom.</p>
+
+    <div class="step-label" style="margin-top: 4px;">Lichaamsbouw</div>
+    <div class="chips" id="otherBodyChips">
+      <div class="chip" data-value="gespierd en breed" onclick="toggleChip(this, 'otherBody')">Gespierd & breed</div>
+      <div class="chip" data-value="slank en lenig" onclick="toggleChip(this, 'otherBody')">Slank & lenig</div>
+      <div class="chip" data-value="lang en dominant aanwezig" onclick="toggleChip(this, 'otherBody')">Lang & imposant</div>
+      <div class="chip" data-value="zacht en vol" onclick="toggleChip(this, 'otherBody')">Zacht & vol</div>
+      <div class="chip" data-value="sterke handen" onclick="toggleChip(this, 'otherBody')">Sterke handen</div>
+    </div>
+
+    <div class="step-label" style="margin-top: 10px;">Uitstraling</div>
+    <div class="chips" id="otherVibeChips">
+      <div class="chip" data-value="kalm en beheerst, alles onder controle" onclick="toggleChip(this, 'otherVibe')">Kalm & beheerst</div>
+      <div class="chip" data-value="intens en bezitterig" onclick="toggleChip(this, 'otherVibe')">Intens & bezitterig</div>
+      <div class="chip" data-value="speels en plagend" onclick="toggleChip(this, 'otherVibe')">Speels & plagend</div>
+      <div class="chip" data-value="donker, mysterieus, onvoorspelbaar" onclick="toggleChip(this, 'otherVibe')">Donker & mysterieus</div>
+      <div class="chip" data-value="teder maar dwingend" onclick="toggleChip(this, 'otherVibe')">Teder maar dwingend</div>
+      <div class="chip" data-value="ruw en recht-door-zee" onclick="toggleChip(this, 'otherVibe')">Ruw & direct</div>
+    </div>
+
+    <div class="step-label" style="margin-top: 10px;">Kleding</div>
+    <div class="chips" id="otherClothingChips">
+      <div class="chip" data-value="pak, stropdas losgetrokken" onclick="toggleChip(this, 'otherClothing')">Pak & stropdas</div>
+      <div class="chip" data-value="zwart t-shirt, simpel" onclick="toggleChip(this, 'otherClothing')">Zwart t-shirt</div>
+      <div class="chip" data-value="overhemd, mouwen opgerold" onclick="toggleChip(this, 'otherClothing')">Overhemd</div>
+      <div class="chip" data-value="naakt, ontbloot" onclick="toggleChip(this, 'otherClothing')">Naakt</div>
+      <div class="chip" data-value="handdoek, net uit de douche" onclick="toggleChip(this, 'otherClothing')">Handdoek</div>
+      <div class="chip" data-value="leer, donkere kleding" onclick="toggleChip(this, 'otherClothing')">Leer & donker</div>
+      <div class="chip" data-value="uniform" onclick="toggleChip(this, 'otherClothing')">Uniform</div>
+    </div>
+
+    <div class="step-label" style="margin-top: 10px;">Stem & communicatie</div>
+    <div class="chips" id="otherVoiceChips">
+      <div class="chip" data-value="lage, diepe stem die bevelen fluistert" onclick="toggleChip(this, 'otherVoice')">Lage fluisterstem</div>
+      <div class="chip" data-value="zegt weinig, laat handen spreken" onclick="toggleChip(this, 'otherVoice')">Zwijgzaam, fysiek</div>
+      <div class="chip" data-value="dirty talk, zegt precies wat hij/zij gaat doen" onclick="toggleChip(this, 'otherVoice')">Dirty talk</div>
+      <div class="chip" data-value="prijst en beloont met woorden" onclick="toggleChip(this, 'otherVoice')">Prijzend</div>
+      <div class="chip" data-value="streng en kort, geen discussie" onclick="toggleChip(this, 'otherVoice')">Streng & kort</div>
+    </div>
+
+    <textarea id="otherCustom" placeholder="Andere details: naam, uiterlijk, geur, bijzonderheden..." oninput="handleCustomInput('otherExtra', this)"></textarea>
+  </div>
+
+  <!-- STAP 6: Dynamiek (data-step 5) -->
+  <div class="step" data-step="5">
+    <div class="step-label">Stap 6 van 10</div>
+    <h2>Wat is de dynamiek?</h2>
+    <p class="hint">Wie neemt de leiding? Hoe voelt de machtsbalans?</p>
+    <div class="options single-col">
+      <div class="option" data-value="ik onderwerpend" onclick="selectOption(this, 'dynamic')">
+        <div class="label">Ik geef me over</div>
+        <div class="desc">Hij/zij bepaalt, ik volg en gehoorzaam</div>
+      </div>
+      <div class="option" data-value="ik dominant" onclick="selectOption(this, 'dynamic')">
+        <div class="label">Ik neem de leiding</div>
+        <div class="desc">Ik bepaal het tempo en de regels</div>
+      </div>
+      <div class="option" data-value="gelijkwaardig" onclick="selectOption(this, 'dynamic')">
+        <div class="label">Gelijkwaardig</div>
+        <div class="desc">Samen ontdekken, om de beurt leiden</div>
+      </div>
+      <div class="option" data-value="wisselend" onclick="selectOption(this, 'dynamic')">
+        <div class="label">Wisselend</div>
+        <div class="desc">De macht verschuift gedurende de droom</div>
+      </div>
+    </div>
+
+    <div class="slider-group" style="margin-top: 8px;">
+      <label>Intensiteit van de machtsverhouding <span id="intensityValue">3</span>/5</label>
+      <input type="range" min="1" max="5" value="3" id="intensitySlider" oninput="document.getElementById('intensityValue').textContent=this.value; dreamData.intensity=this.value;">
+      <div class="intensity-labels">
+        <span>Subtiel & speels</span>
+        <span>Intens & streng</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- STAP 7: Kinks (data-step 6) -->
+  <div class="step" data-step="6">
+    <div class="step-label">Stap 7 van 10</div>
+    <h2>Wat trekt je aan?</h2>
+    <p class="hint">Kies alles wat je aanspreekt. Niets is verplicht, alles mag.</p>
+
+    <div class="step-label" style="margin-top: 4px;">Zintuiglijk</div>
+    <div class="chips" id="kinksSensory">
+      <div class="chip" data-value="geblinddoekt" onclick="toggleChip(this, 'kinks')">Geblinddoekt</div>
+      <div class="chip" data-value="vastgebonden" onclick="toggleChip(this, 'kinks')">Vastgebonden</div>
+      <div class="chip" data-value="ijs & warmte" onclick="toggleChip(this, 'kinks')">Ijs & warmte</div>
+      <div class="chip" data-value="veren & zachte aanraking" onclick="toggleChip(this, 'kinks')">Veren & zacht</div>
+      <div class="chip" data-value="massage met olie" onclick="toggleChip(this, 'kinks')">Massage & olie</div>
+    </div>
+
+    <div class="step-label" style="margin-top: 10px;">Controle</div>
+    <div class="chips" id="kinksControl">
+      <div class="chip" data-value="bevelen & gehoorzamen" onclick="toggleChip(this, 'kinks')">Bevelen</div>
+      <div class="chip" data-value="tease & denial" onclick="toggleChip(this, 'kinks')">Tease & denial</div>
+      <div class="chip" data-value="orgasmecontrole" onclick="toggleChip(this, 'kinks')">Orgasmecontrole</div>
+      <div class="chip" data-value="forced orgasm" onclick="toggleChip(this, 'kinks')">Gedwongen genot</div>
+      <div class="chip" data-value="roleplay" onclick="toggleChip(this, 'kinks')">Rollenspel</div>
+    </div>
+
+    <div class="step-label" style="margin-top: 10px;">Intenser</div>
+    <div class="chips" id="kinksIntense">
+      <div class="chip" data-value="spanking" onclick="toggleChip(this, 'kinks')">Spanking</div>
+      <div class="chip" data-value="haar trekken" onclick="toggleChip(this, 'kinks')">Haar trekken</div>
+      <div class="chip" data-value="beet in de nek" onclick="toggleChip(this, 'kinks')">Bijten</div>
+      <div class="chip" data-value="choking (licht)" onclick="toggleChip(this, 'kinks')">Keel vasthouden</div>
+      <div class="chip" data-value="impact play" onclick="toggleChip(this, 'kinks')">Impact play</div>
+      <div class="chip" data-value="pet play" onclick="toggleChip(this, 'kinks')">Pet play</div>
+    </div>
+
+    <div class="step-label" style="margin-top: 10px;">Visueel & kleding</div>
+    <div class="chips" id="kinksVisual">
+      <div class="chip" data-value="lingerie" onclick="toggleChip(this, 'kinks')">Lingerie</div>
+      <div class="chip" data-value="leer & latex" onclick="toggleChip(this, 'kinks')">Leer & latex</div>
+      <div class="chip" data-value="halsband" onclick="toggleChip(this, 'kinks')">Halsband</div>
+      <div class="chip" data-value="uniform / kostuum" onclick="toggleChip(this, 'kinks')">Uniform</div>
+      <div class="chip" data-value="naakt terwijl de ander gekleed is" onclick="toggleChip(this, 'kinks')">CFNM / CMNF</div>
+    </div>
+
+    <textarea id="kinksCustom" placeholder="Eigen toevoegingen of specifieke wensen..." oninput="handleCustomInput('kinksExtra', this)"></textarea>
+  </div>
+
+  <!-- STAP 8: Opening (data-step 7) -->
+  <div class="step" data-step="7">
+    <div class="step-label">Stap 8 van 10</div>
+    <h2>Hoe begint de droom?</h2>
+    <p class="hint">Het eerste moment. Hoe kom je in de situatie terecht?</p>
+    <div class="options single-col">
+      <div class="option" data-value="Ik word wakker en voel handen over mijn lichaam glijden" onclick="selectOption(this, 'opening')">
+        <div class="label">Gewekt door aanraking</div>
+      </div>
+      <div class="option" data-value="Ik word zonder waarschuwing tegen de muur geduwd" onclick="selectOption(this, 'opening')">
+        <div class="label">Onverwacht overrompeld</div>
+      </div>
+      <div class="option" data-value="We kijken elkaar aan en de spanning is onhoudbaar" onclick="selectOption(this, 'opening')">
+        <div class="label">Langzaam opbouwende spanning</div>
+      </div>
+      <div class="option" data-value="Ik krijg een instructie: kleed je uit en wacht op me" onclick="selectOption(this, 'opening')">
+        <div class="label">Een bevel dat alles in gang zet</div>
+      </div>
+      <div class="option" data-value="Ik word geblinddoekt en weet niet wat er gaat komen" onclick="selectOption(this, 'opening')">
+        <div class="label">Geblinddoekt — geen controle</div>
+      </div>
+    </div>
+    <textarea id="openingCustom" placeholder="Of beschrijf je eigen opening..." oninput="handleCustomInput('openingExtra', this)"></textarea>
+  </div>
+
+  <!-- STAP 9: Escalatie & hoogtepunt (data-step 8) -->
+  <div class="step" data-step="8">
+    <div class="step-label">Stap 9 van 10</div>
+    <h2>Wat escaleert? Wat is het hoogtepunt?</h2>
+    <p class="hint">Wat maakt de droom intenser? Waar bouwt het naartoe?</p>
+
+    <div class="step-label" style="margin-top: 4px;">De spanning stijgt door...</div>
+    <div class="chips" id="escalationChips">
+      <div class="chip" data-value="steeds explicieter dirty talk" onclick="toggleChip(this, 'escalation')">Dirty talk</div>
+      <div class="chip" data-value="steeds minder kleding" onclick="toggleChip(this, 'escalation')">Langzaam uitkleden</div>
+      <div class="chip" data-value="verandering van positie of locatie" onclick="toggleChip(this, 'escalation')">Positiewisseling</div>
+      <div class="chip" data-value="hij/zij neemt meer controle" onclick="toggleChip(this, 'escalation')">Meer controle</div>
+      <div class="chip" data-value="ik smeek om meer" onclick="toggleChip(this, 'escalation')">Smeken</div>
+      <div class="chip" data-value="iets onverwachts gebeurt" onclick="toggleChip(this, 'escalation')">Verrassing</div>
+      <div class="chip" data-value="worden betrapt of bekeken" onclick="toggleChip(this, 'escalation')">Risico betrapt te worden</div>
+    </div>
+
+    <div class="step-label" style="margin-top: 10px;">Het hoogtepunt is...</div>
+    <div class="options single-col">
+      <div class="option" data-value="een overweldigend, langgerekt orgasme" onclick="selectOption(this, 'climax')">
+        <div class="label">Langzaam en overweldigend</div>
+      </div>
+      <div class="option" data-value="ruw, wild en ongecontroleerd samenkomen" onclick="selectOption(this, 'climax')">
+        <div class="label">Ruw en ongecontroleerd</div>
+      </div>
+      <div class="option" data-value="gedwongen klaarkomen na lang uitstel" onclick="selectOption(this, 'climax')">
+        <div class="label">Eindelijk mogen na denial</div>
+      </div>
+      <div class="option" data-value="meerdere orgasmes achter elkaar" onclick="selectOption(this, 'climax')">
+        <div class="label">Meerdere golven</div>
+      </div>
+    </div>
+    <textarea id="climaxCustom" placeholder="Eigen beschrijving van de climax..." oninput="handleCustomInput('climaxExtra', this)"></textarea>
+  </div>
+
+  <!-- STAP 10: Extra's (data-step 9) -->
+  <div class="step" data-step="9">
+    <div class="step-label">Stap 10 van 10</div>
+    <h2>Laatste details</h2>
+    <p class="hint">Nog iets dat je droom compleet maakt?</p>
+
+    <div class="slider-group">
+      <label>Hoe expliciet? <span id="explicitValue">3</span>/5</label>
+      <input type="range" min="1" max="5" value="3" id="explicitSlider" oninput="document.getElementById('explicitValue').textContent=this.value; dreamData.explicitness=this.value;">
+      <div class="intensity-labels">
+        <span>Suggestief & poetisch</span>
+        <span>Niets verhullen</span>
+      </div>
+    </div>
+
+    <div class="slider-group" style="margin-top: 8px;">
+      <label>Hoe lang? <span id="lengthValue">Gemiddeld</span></label>
+      <input type="range" min="1" max="3" value="2" id="lengthSlider" oninput="updateLength(this.value)">
+      <div class="intensity-labels">
+        <span>Kort & krachtig</span>
+        <span>Uitgebreid</span>
+      </div>
+    </div>
+
+    <textarea id="extraNotes" placeholder="Nog specifieke wensen, woorden die je wilt horen, of iets dat absoluut wel/niet mag..." oninput="handleCustomInput('extra', this)"></textarea>
+  </div>
+
+  <!-- RESULTAAT (data-step 10) -->
+  <div class="step" data-step="10">
+    <div class="step-label">Jouw droom</div>
+
+    <div class="output-toggle" id="outputToggle">
+      <button class="active" onclick="showOutput('scenario')">Scenario</button>
+      <button onclick="showOutput('verhaal')">Uitgeschreven verhaal</button>
+    </div>
+
+    <div class="result-box" id="resultBox"></div>
+    <div class="story-box" id="storyBox"></div>
+
+    <button class="copy-btn" id="copyBtn" onclick="copyResult()">Kopieer naar klembord</button>
+    <button class="story-btn" id="storyBtn" onclick="generateStory()" style="display:none">
+      ✨ Schrijf dit uit als verhaal
+    </button>
+    <button class="restart-btn" onclick="restart()">Opnieuw beginnen</button>
+  </div>
+
+  <div class="nav-buttons" id="navButtons">
+    <button class="btn btn-back" id="btnBack" onclick="prevStep()" style="display:none">Terug</button>
+    <button class="btn btn-next" id="btnNext" onclick="nextStep()">Volgende</button>
+  </div>
+</div>
+
+<!-- ============ INSTALL MODAL ============ -->
+<div class="modal-backdrop" id="installModal" onclick="if(event.target===this)closeInstallModal()">
+  <div class="modal">
+    <h3>📲 Op startscherm zetten</h3>
+    <p>Zet Droomweefster als app-icoon op je telefoon — sneller te openen, geen browserbalk.</p>
+
+    <h4>iPhone (Safari)</h4>
+    <ol>
+      <li>Tik op het deel-icoon onderin (vierkant met pijl omhoog).</li>
+      <li>Scrol omlaag en kies <strong>"Zet op beginscherm"</strong>.</li>
+      <li>Tik op <strong>Voeg toe</strong>.</li>
+    </ol>
+
+    <h4>Android (Chrome)</h4>
+    <ol>
+      <li>Tik op de drie puntjes rechtsboven.</li>
+      <li>Kies <strong>"Toevoegen aan startscherm"</strong> of <strong>"App installeren"</strong>.</li>
+      <li>Bevestig met <strong>Installeren</strong>.</li>
+    </ol>
+
+    <button class="modal-close" onclick="closeInstallModal()">Sluiten</button>
+  </div>
+</div>
+
+<script>
+// ===== PASSWORD + DISCLAIMER =====
+const APP_PASSWORD = "maanlicht-fluweel";
+const PWD_KEY = "dw_unlocked";
+const AGE_KEY = "dw_age_ok";
+
+function checkPassword() {
+  const input = document.getElementById('passwordInput');
+  const err = document.getElementById('passwordError');
+  if (input.value.trim().toLowerCase() === APP_PASSWORD.toLowerCase()) {
+    sessionStorage.setItem(PWD_KEY, "1");
+    err.textContent = "";
+    showAgeGate();
+  } else {
+    err.textContent = "Onjuist wachtwoord.";
+    input.value = "";
+    input.focus();
+  }
+}
+
+function showAgeGate() {
+  document.getElementById('passwordGate').classList.add('hidden');
+  if (sessionStorage.getItem(AGE_KEY) === "1") {
+    showApp();
+  } else {
+    document.getElementById('ageGate').classList.remove('hidden');
+  }
+}
+
+function acceptAge() {
+  sessionStorage.setItem(AGE_KEY, "1");
+  showApp();
+}
+
+function showApp() {
+  document.getElementById('ageGate').classList.add('hidden');
+  document.getElementById('app').style.display = 'flex';
+}
+
+// Allow Enter key to submit password
+document.addEventListener('DOMContentLoaded', () => {
+  const pwdInput = document.getElementById('passwordInput');
+  if (pwdInput) {
+    pwdInput.addEventListener('keydown', e => {
+      if (e.key === 'Enter') checkPassword();
+    });
+    // Skip gates if already unlocked this session
+    if (sessionStorage.getItem(PWD_KEY) === "1") {
+      showAgeGate();
+    } else {
+      pwdInput.focus();
+    }
+  }
+});
+
+// ===== INSTALL MODAL =====
+function openInstallModal() {
+  document.getElementById('installModal').classList.add('visible');
+}
+function closeInstallModal() {
+  document.getElementById('installModal').classList.remove('visible');
+}
+
+// ===== RESTART CONFIRM =====
+function confirmRestart() {
+  if (confirm("Alle keuzes wissen en opnieuw beginnen?")) {
+    restart();
+  }
+}
+
+// ===== WIZARD LOGIC =====
+const INPUT_STEPS = 10;
+const RESULT_STEP = 10;
+const TOTAL_STEPS = 11;
+let currentStep = 0;
+let currentOutputMode = 'scenario';
+
+const dreamData = {
+  location: '',
+  locationCustom: '',
+  moment: [],
+  light: [],
+  senses: [],
+  who: '',
+  whoName: '',
+  whoDetail: '',
+  selfClothing: [],
+  selfMood: [],
+  selfLook: [],
+  selfExtra: '',
+  otherBody: [],
+  otherVibe: [],
+  otherClothing: [],
+  otherVoice: [],
+  otherExtra: '',
+  dynamic: '',
+  intensity: '3',
+  kinks: [],
+  kinksExtra: '',
+  opening: '',
+  openingExtra: '',
+  escalation: [],
+  climax: '',
+  climaxExtra: '',
+  explicitness: '3',
+  length: '2',
+  extra: ''
+};
+
+function selectOption(el, key) {
+  const parent = el.closest('.options');
+  parent.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
+  el.classList.add('selected');
+  dreamData[key] = el.dataset.value;
+}
+
+function toggleChip(el, key) {
+  el.classList.toggle('selected');
+  rebuildChipData(key, el);
+}
+
+function rebuildChipData(key, clickedEl) {
+  const step = clickedEl.closest('.step');
+  const multiGroupKeys = ['kinks', 'escalation'];
+
+  if (multiGroupKeys.includes(key)) {
+    dreamData[key] = [];
+    step.querySelectorAll('.chip.selected').forEach(c => {
+      dreamData[key].push(c.dataset.value);
+    });
+  } else {
+    const container = clickedEl.closest('.chips');
+    dreamData[key] = [];
+    container.querySelectorAll('.chip.selected').forEach(c => {
+      dreamData[key].push(c.dataset.value);
+    });
+  }
+}
+
+function handleCustomInput(key, el) {
+  dreamData[key] = el.value;
+}
+
+function updateLength(val) {
+  const labels = { '1': 'Kort', '2': 'Gemiddeld', '3': 'Uitgebreid' };
+  document.getElementById('lengthValue').textContent = labels[val];
+  dreamData.length = val;
+}
+
+function updateProgress() {
+  const bar = document.getElementById('progressBar');
+  bar.innerHTML = '';
+  for (let i = 0; i < INPUT_STEPS; i++) {
+    const dot = document.createElement('div');
+    dot.className = 'progress-dot';
+    if (i < currentStep) dot.classList.add('done');
+    if (i === currentStep) dot.classList.add('active');
+    bar.appendChild(dot);
+  }
+}
+
+function nextStep() {
+  if (currentStep === INPUT_STEPS - 1) {
+    generateResult();
+  }
+  if (currentStep < TOTAL_STEPS - 1) {
+    document.querySelector(`.step[data-step="${currentStep}"]`).classList.remove('active');
+    currentStep++;
+    document.querySelector(`.step[data-step="${currentStep}"]`).classList.add('active');
+    updateUI();
+  }
+}
+
+function prevStep() {
+  if (currentStep > 0) {
+    document.querySelector(`.step[data-step="${currentStep}"]`).classList.remove('active');
+    currentStep--;
+    document.querySelector(`.step[data-step="${currentStep}"]`).classList.add('active');
+    updateUI();
+  }
+}
+
+function updateUI() {
+  updateProgress();
+  const backBtn = document.getElementById('btnBack');
+  const nextBtn = document.getElementById('btnNext');
+  const navButtons = document.getElementById('navButtons');
+
+  if (currentStep === RESULT_STEP) {
+    navButtons.style.display = 'none';
+  } else {
+    navButtons.style.display = 'flex';
+    backBtn.style.display = currentStep > 0 ? 'block' : 'none';
+    nextBtn.textContent = currentStep === INPUT_STEPS - 1 ? 'Genereer mijn droom ✨' : 'Volgende';
+  }
+}
+
+function join(arr) { return arr.length ? arr.join(', ') : ''; }
+
+function generateResult() {
+  const loc = dreamData.locationCustom || dreamData.location || 'een onbekende plek';
+  const whoLabels = { partner: 'Mijn partner', onbekende: 'Een mysterieuze onbekende', bekende: 'Een bekend persoon', kennis: 'Iemand die ik ken', fictief: 'Een fictief personage', meerdere: 'Meerdere personen' };
+  const dynLabels = {
+    'ik onderwerpend': 'Ik geef me over — hij/zij bepaalt',
+    'ik dominant': 'Ik neem de leiding',
+    'gelijkwaardig': 'Gelijkwaardig — samen ontdekken',
+    'wisselend': 'Wisselend — de macht verschuift'
+  };
+  const explLabels = { '1': 'Heel suggestief', '2': 'Suggestief', '3': 'Balans', '4': 'Direct', '5': 'Heel expliciet' };
+  const lenLabels = { '1': 'Kort', '2': 'Gemiddeld', '3': 'Uitgebreid' };
+
+  let r = '';
+  r += '🌙 SETTING\n';
+  r += `Locatie: ${loc}\n`;
+  if (join(dreamData.moment)) r += `Moment: ${join(dreamData.moment)}\n`;
+  if (join(dreamData.light)) r += `Licht: ${join(dreamData.light)}\n`;
+  if (join(dreamData.senses)) r += `Sfeer: ${join(dreamData.senses)}\n`;
+  r += '\n';
+
+  r += '💃 IK\n';
+  if (join(dreamData.selfClothing)) r += `Kleding: ${join(dreamData.selfClothing)}\n`;
+  if (join(dreamData.selfMood)) r += `Stemming: ${join(dreamData.selfMood)}\n`;
+  if (join(dreamData.selfLook)) r += `Uiterlijk: ${join(dreamData.selfLook)}\n`;
+  if (dreamData.selfExtra) r += `Details: ${dreamData.selfExtra}\n`;
+  r += '\n';
+
+  r += '🔥 DE ANDER\n';
+  const who = dreamData.who || 'iemand';
+  let whoLine = whoLabels[who] || who;
+  if (dreamData.whoName) whoLine += ` — ${dreamData.whoName}`;
+  r += `${whoLine}\n`;
+  if (dreamData.whoDetail) r += `Beschrijving: ${dreamData.whoDetail}\n`;
+  if (join(dreamData.otherBody)) r += `Lichaam: ${join(dreamData.otherBody)}\n`;
+  if (join(dreamData.otherVibe)) r += `Uitstraling: ${join(dreamData.otherVibe)}\n`;
+  if (join(dreamData.otherClothing)) r += `Kleding: ${join(dreamData.otherClothing)}\n`;
+  if (join(dreamData.otherVoice)) r += `Stem: ${join(dreamData.otherVoice)}\n`;
+  if (dreamData.otherExtra) r += `Details: ${dreamData.otherExtra}\n`;
+  r += '\n';
+
+  r += '⚡ DYNAMIEK\n';
+  r += `${dynLabels[dreamData.dynamic] || dreamData.dynamic || '—'}\n`;
+  r += `Intensiteit: ${'●'.repeat(parseInt(dreamData.intensity))}${'○'.repeat(5 - parseInt(dreamData.intensity))}\n`;
+  r += '\n';
+
+  const kinks = join(dreamData.kinks);
+  if (kinks || dreamData.kinksExtra) {
+    r += '🔗 ELEMENTEN\n';
+    if (kinks) r += `${kinks}\n`;
+    if (dreamData.kinksExtra) r += `Extra: ${dreamData.kinksExtra}\n`;
+    r += '\n';
+  }
+
+  const opening = dreamData.openingExtra || dreamData.opening || '';
+  const escalation = join(dreamData.escalation);
+  const climax = dreamData.climaxExtra || dreamData.climax || '';
+  r += '📖 VERLOOP\n';
+  if (opening) r += `Opening: ${opening}\n`;
+  if (escalation) r += `Opbouw: ${escalation}\n`;
+  if (climax) r += `Hoogtepunt: ${climax}\n`;
+  r += '\n';
+
+  r += '🎨 TOON\n';
+  r += `Expliciteit: ${explLabels[dreamData.explicitness] || 'Balans'}\n`;
+  r += `Lengte: ${lenLabels[dreamData.length] || 'Gemiddeld'}\n`;
+
+  if (dreamData.extra) {
+    r += `\n💬 EXTRA\n${dreamData.extra}\n`;
+  }
+
+  document.getElementById('resultBox').textContent = r;
+
+  document.getElementById('storyBtn').style.display = 'block';
+  document.getElementById('storyBox').textContent = '';
+  document.getElementById('storyBox').classList.remove('visible');
+  currentOutputMode = 'scenario';
+  updateToggleUI();
+}
+
+function showOutput(mode) {
+  currentOutputMode = mode;
+  updateToggleUI();
+
+  const resultBox = document.getElementById('resultBox');
+  const storyBox = document.getElementById('storyBox');
+  const storyBtn = document.getElementById('storyBtn');
+
+  if (mode === 'scenario') {
+    resultBox.style.display = 'block';
+    storyBox.classList.remove('visible');
+    storyBtn.style.display = 'block';
+  } else {
+    resultBox.style.display = 'none';
+    if (storyBox.textContent.trim()) {
+      storyBox.classList.add('visible');
+      storyBtn.style.display = 'none';
+    } else {
+      storyBox.innerHTML = '<div class="generating-indicator">Klik hieronder om het verhaal te laten schrijven</div>';
+      storyBox.classList.add('visible');
+      storyBtn.style.display = 'block';
+    }
+  }
+}
+
+function updateToggleUI() {
+  const btns = document.querySelectorAll('.output-toggle button');
+  btns.forEach(b => b.classList.remove('active'));
+  if (currentOutputMode === 'scenario') {
+    btns[0].classList.add('active');
+  } else {
+    btns[1].classList.add('active');
+  }
+}
+
+function generateStory() {
+  const storyBox = document.getElementById('storyBox');
+  const storyBtn = document.getElementById('storyBtn');
+  storyBtn.disabled = true;
+  storyBtn.textContent = 'Verhaal wordt geschreven...';
+
+  currentOutputMode = 'verhaal';
+  updateToggleUI();
+  document.getElementById('resultBox').style.display = 'none';
+  storyBox.innerHTML = '<div class="generating-indicator">Even geduld, je droom wordt geweven<span class="dots"></span></div>';
+  storyBox.classList.add('visible');
+
+  setTimeout(() => {
+    const story = buildStory();
+    storyBox.textContent = story;
+    storyBtn.style.display = 'none';
+  }, 1500);
+}
+
+function buildStory() {
+  const d = dreamData;
+  const loc = d.locationCustom || d.location || 'een onbekende plek';
+  const locDescriptions = {
+    'slaapkamer': 'de slaapkamer',
+    'hotelkamer': 'een luxueuze hotelkamer',
+    'buiten': 'een verborgen plek in de natuur',
+    'bad': 'de badkamer, vol stoom',
+    'kantoor': 'een verlaten kantoor',
+    'feest': 'een feest vol vreemden'
+  };
+  const locText = locDescriptions[d.location] || loc;
+
+  const nameGiven = d.whoName ? d.whoName : '';
+  const isPlural = d.who === 'meerdere';
+  const pronoun = isPlural ? 'ze' : 'hij';
+  const Pronoun = isPlural ? 'Ze' : 'Hij';
+  const whoText = nameGiven || {
+    'partner': 'hij',
+    'onbekende': 'een onbekende man',
+    'bekende': 'hij',
+    'kennis': 'hij',
+    'fictief': 'hij',
+    'meerdere': 'zij'
+  }[d.who] || 'hij';
+
+  const expl = parseInt(d.explicitness) || 3;
+  let paragraphs = [];
+
+  let p1 = '';
+  const timeMap = {
+    'late avond': 'Het is laat op de avond',
+    'nacht': 'Het is diep in de nacht',
+    'ochtend': 'Het is vroeg in de ochtend, het licht is nog zacht',
+    'middag': 'Het is midden op de dag, onverwacht'
+  };
+  const timeText = d.moment.length ? (timeMap[d.moment[0]] || `Het is ${d.moment[0]}`) : 'Het is laat';
+
+  const lightMap = {
+    'kaarslicht': 'Kaarslicht flakkert zacht en werpt dansende schaduwen over de muren.',
+    'halfdonker': 'Het is halfdonker — net genoeg licht om silhouetten te zien.',
+    'pikdonker': 'Het is pikdonker. Je ziet niets, maar voelt alles des te intenser.',
+    'maanlicht': 'Maanlicht valt naar binnen en tekent zilveren lijnen op de huid.',
+    'fel licht': 'Het licht is fel — alles is zichtbaar, niets blijft verborgen.'
+  };
+  const lightText = d.light.length ? (lightMap[d.light[0]] || '') : '';
+
+  const senseTexts = d.senses.map(s => {
+    const map = {
+      'muziek op de achtergrond': 'Ergens op de achtergrond speelt muziek',
+      'stilte, alleen ademhaling': 'Het is stil — alleen het geluid van ademhaling',
+      'geur van parfum': 'De geur van parfum hangt in de lucht',
+      'warmte van de haard': 'De warmte van het vuur kruipt over je huid',
+      'regen tegen het raam': 'Buiten tikt de regen tegen het raam',
+      'zijden lakens': 'Zijden lakens glijden koel langs je lichaam'
+    };
+    return map[s] || s;
+  });
+
+  p1 = `${timeText}. Je bent in ${locText}.`;
+  if (lightText) p1 += ` ${lightText}`;
+  if (senseTexts.length) p1 += ` ${senseTexts.join('. ')}.`;
+  paragraphs.push(p1);
+
+  let pSelf = '';
+  if (d.selfClothing.length || d.selfMood.length || d.selfLook.length) {
+    let parts = [];
+    if (d.selfClothing.length) parts.push(`Je draagt ${d.selfClothing.join(' en ')}`);
+    if (d.selfLook.length) parts.push(`${d.selfLook.join(', ')}`);
+    if (d.selfMood.length) parts.push(`Je voelt je ${d.selfMood.join(' en ')}`);
+    pSelf = parts.join('. ') + '.';
+    if (d.selfExtra) pSelf += ` ${d.selfExtra}`;
+    paragraphs.push(pSelf);
+  }
+
+  let pOther = '';
+  if (d.who) {
+    let whoIntro;
+    if (nameGiven) {
+      whoIntro = isPlural ? `Dan zijn ze er. ${nameGiven}.` : `Dan is ${nameGiven} er.`;
+    } else {
+      const introMap = {
+        'partner': 'Dan is hij er.',
+        'onbekende': 'Dan verschijnt hij — een vreemde, maar je lichaam herkent hem onmiddellijk.',
+        'bekende': 'Dan staat hij daar. Je herkent hem meteen.',
+        'kennis': 'Dan is hij er. Iemand die je kent, maar nu op een heel andere manier.',
+        'fictief': 'Dan verschijnt hij. Precies zoals je je hem had voorgesteld.',
+        'meerdere': 'Dan zijn ze er. Meerdere paar ogen op jou gericht.'
+      };
+      whoIntro = introMap[d.who] || `Dan is ${whoText} er.`;
+    }
+    if (d.whoDetail) whoIntro += ` ${d.whoDetail}`;
+
+    let otherParts = [whoIntro];
+    if (d.otherBody.length) otherParts.push(`${d.otherBody.join(', ')}.`);
+    if (d.otherClothing.length) otherParts.push(`${Pronoun} draagt ${d.otherClothing.join(' en ')}.`);
+    if (d.otherVibe.length) otherParts.push(`${isPlural ? 'Hun' : 'Zijn'} uitstraling is ${d.otherVibe.join(', ')}.`);
+    if (d.otherVoice.length) otherParts.push(`${d.otherVoice.join('. ')}.`);
+    if (d.otherExtra) otherParts.push(d.otherExtra);
+
+    pOther = otherParts.join(' ');
+    paragraphs.push(pOther);
+  }
+
+  const opening = d.openingExtra || d.opening || '';
+  if (opening) paragraphs.push(opening);
+
+  let pDynamic = '';
+  const dynTexts = {
+    'ik onderwerpend': `Je geeft je over. ${Pronoun} heeft de volledige controle en jij volgt — gewillig, overgegeven.`,
+    'ik dominant': 'Jij bepaalt. Elk gebaar, elk woord komt van jou. De ander gehoorzaamt.',
+    'gelijkwaardig': 'Jullie bewegen samen, om de beurt leidend, om de beurt volgend.',
+    'wisselend': `Eerst leid jij, dan neemt ${pronoun} het over. De macht golft heen en weer.`
+  };
+  pDynamic = dynTexts[d.dynamic] || '';
+
+  if (d.kinks.length) {
+    const kinkSentences = d.kinks.map(k => {
+      const map = {
+        'geblinddoekt': 'Een blinddoek glijdt over je ogen — vanaf nu voel je alleen nog maar.',
+        'vastgebonden': expl >= 4 ? 'Je polsen worden vastgebonden, strak genoeg om je eraan te herinneren dat je niet weg kunt.' : 'Je handen worden voorzichtig vastgebonden.',
+        'ijs & warmte': 'Een ijsblokje glijdt langs je huid, gevolgd door warme lippen.',
+        'veren & zachte aanraking': 'Iets zachts strijkt over je lichaam, zo licht dat het bijna ondraaglijk is.',
+        'massage met olie': 'Warme olie wordt over je huid uitgegoten, sterke handen kneden elk stukje spanning weg.',
+        'bevelen & gehoorzamen': expl >= 3 ? `"Op je knieën." De stem laat geen ruimte voor twijfel.` : `${Pronoun} geeft bevelen en jij gehoorzaamt, zonder vragen.`,
+        'tease & denial': 'Steeds opnieuw word je naar de rand gebracht, en steeds opnieuw wordt het je ontzegd.',
+        'orgasmecontrole': `"Niet klaarkomen. Nog niet." De woorden klinken als een belofte en een straf tegelijk.`,
+        'forced orgasm': expl >= 4 ? 'Je lichaam wordt gedwongen om te komen, keer op keer, tot je smeekt om te mogen stoppen.' : 'Het genot wordt je opgedrongen, overweldigend en onophoudelijk.',
+        'roleplay': 'Vanavond ben je iemand anders. De rollen zijn verdeeld en het spel begint.',
+        'spanking': expl >= 3 ? 'Een hand landt op je billen — hard genoeg om te steken, zacht genoeg om te verlangen naar meer.' : 'Een tik, nog een — de pijn vermengt zich met genot.',
+        'haar trekken': `${Pronoun} grijpt je haar en trekt je hoofd naar achteren.`,
+        'beet in de nek': 'Tanden in je nek. Een zachte beet die overgaat in een kus.',
+        'choking (licht)': `Een hand sluit zich voorzichtig om je keel. Niet om te verstikken — om je te laten voelen wie de controle heeft.`,
+        'impact play': 'Het geluid van impact echoot door de kamer, gevolgd door je scherpe ademhaling.',
+        'pet play': `"Braaf meisje." De woorden laten een rilling door je heen gaan.`,
+        'lingerie': 'Het kant van je lingerie schuurt zacht tegen je huid.',
+        'leer & latex': 'De geur van leer vult je neusgaten.',
+        'halsband': `Een halsband wordt om je nek gesloten. Een zacht klikgeluid. Je bent van ${pronoun}.`,
+        'uniform / kostuum': `${Pronoun} draagt een uniform dat gezag uitstraalt.`,
+        'naakt terwijl de ander gekleed is': `Je bent volledig naakt terwijl ${pronoun} nog volledig gekleed is. De kwetsbaarheid is opwindend.`
+      };
+      return map[k] || k;
+    });
+
+    const selected = kinkSentences.slice(0, 5);
+    pDynamic += '\n\n' + selected.join(' ');
+  }
+
+  if (d.kinksExtra) pDynamic += ` ${d.kinksExtra}`;
+  if (pDynamic) paragraphs.push(pDynamic);
+
+  if (d.escalation.length) {
+    const escTexts = d.escalation.map(e => {
+      const map = {
+        'steeds explicieter dirty talk': `De woorden worden rauwer, directer. Elke zin doet iets met je lichaam.`,
+        'steeds minder kleding': `Stuk voor stuk verdwijnt de kleding, tot er niets meer tussen jullie in is.`,
+        'verandering van positie of locatie': `Je wordt verplaatst — een nieuwe positie, een nieuw gevoel.`,
+        'hij/zij neemt meer controle': `${Pronoun} neemt steeds meer controle. Je verzet is allang verdwenen.`,
+        'ik smeek om meer': `"Alsjeblieft..." Het woord ontsnapt je lippen voordat je het kunt tegenhouden.`,
+        'iets onverwachts gebeurt': `Dan gebeurt er iets dat je niet had verwacht. Je adem stokt.`,
+        'worden betrapt of bekeken': `Je beseft dat jullie niet alleen zijn. Iemand kijkt. In plaats van te stoppen, maakt het je wilder.`
+      };
+      return map[e] || e;
+    });
+    paragraphs.push(escTexts.join(' '));
+  }
+
+  const climax = d.climaxExtra || d.climax || '';
+  if (climax) {
+    const climaxTexts = {
+      'een overweldigend, langgerekt orgasme': 'Het hoogtepunt bouwt langzaam op, als een golf die steeds hoger wordt, tot het je volledig overspoelt. Langgerekt, overweldigend, allesomvattend.',
+      'ruw, wild en ongecontroleerd samenkomen': 'Het einde is ruw en ongecontroleerd. Lichamen bewegen wild, ademhaling is rauw, en jullie komen samen in een explosie van opgekropte spanning.',
+      'gedwongen klaarkomen na lang uitstel': '"Nu." Eén woord. Na al het wachten, al het smeken, mag je eindelijk. En het is intenser dan je ooit had kunnen voorstellen.',
+      'meerdere orgasmes achter elkaar': 'Het eerste orgasme is pas het begin. Nog voor je kunt bijkomen, bouwt het volgende al op. Golf na golf, tot je niet meer weet waar de ene ophoudt en de andere begint.'
+    };
+    const climaxText = climaxTexts[climax] || climax;
+    paragraphs.push(climaxText);
+  }
+
+  paragraphs.push('Dan stilte. Alleen ademhaling. En de echo van alles wat zojuist is gebeurd.');
+
+  if (d.extra) paragraphs.push(`\n[${d.extra}]`);
+
+  return paragraphs.join('\n\n');
+}
+
+function copyResult() {
+  let text;
+  if (currentOutputMode === 'verhaal') {
+    text = document.getElementById('storyBox').textContent;
+  } else {
+    text = document.getElementById('resultBox').textContent;
+  }
+
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = document.getElementById('copyBtn');
+    btn.textContent = '✓ Gekopieerd!';
+    btn.classList.add('copied');
+    setTimeout(() => {
+      btn.textContent = 'Kopieer naar klembord';
+      btn.classList.remove('copied');
+    }, 2000);
+  });
+}
+
+function restart() {
+  Object.keys(dreamData).forEach(k => {
+    if (Array.isArray(dreamData[k])) dreamData[k] = [];
+    else if (k === 'intensity' || k === 'explicitness') dreamData[k] = '3';
+    else if (k === 'length') dreamData[k] = '2';
+    else dreamData[k] = '';
+  });
+
+  document.querySelectorAll('.option.selected, .chip.selected').forEach(el => el.classList.remove('selected'));
+  document.querySelectorAll('textarea, input[type="text"]').forEach(el => { if (el.id !== 'passwordInput') el.value = ''; });
+  document.getElementById('intensitySlider').value = 3;
+  document.getElementById('explicitSlider').value = 3;
+  document.getElementById('lengthSlider').value = 2;
+  document.getElementById('intensityValue').textContent = '3';
+  document.getElementById('explicitValue').textContent = '3';
+  document.getElementById('lengthValue').textContent = 'Gemiddeld';
+  document.getElementById('storyBox').textContent = '';
+  document.getElementById('storyBox').classList.remove('visible');
+  document.getElementById('resultBox').style.display = 'block';
+
+  document.querySelector(`.step[data-step="${currentStep}"]`).classList.remove('active');
+  currentStep = 0;
+  currentOutputMode = 'scenario';
+  document.querySelector('.step[data-step="0"]').classList.add('active');
+  document.getElementById('navButtons').style.display = 'flex';
+  updateUI();
+}
+
+updateProgress();
+updateUI();
+</script>
+</body>
+</html>
