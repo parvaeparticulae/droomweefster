@@ -992,6 +992,12 @@
 </div>
 
 <script>
+// ===== CONFIGURATIE =====
+// Vul hier de URL van de Cloudflare Worker in zodra die is opgezet.
+// Voorbeeld: "https://droomweefster-ai.parvaeparticulae.workers.dev"
+// Laat leeg om de sjablonen te blijven gebruiken.
+const WORKER_URL = "";
+
 // ===== PASSWORD + DISCLAIMER =====
 const APP_PASSWORD = "maanlicht-fluweel";
 const PWD_KEY = "dw_unlocked";
@@ -1304,7 +1310,7 @@ function updateToggleUI() {
   }
 }
 
-function generateStory() {
+async function generateStory() {
   const storyBox = document.getElementById('storyBox');
   const storyBtn = document.getElementById('storyBtn');
   storyBtn.disabled = true;
@@ -1316,9 +1322,46 @@ function generateStory() {
   storyBox.innerHTML = '<div class="generating-indicator">Even geduld, je droom wordt geweven<span class="dots"></span></div>';
   storyBox.classList.add('visible');
 
+  // Als de Worker is geconfigureerd, vraag een echt AI-verhaal aan.
+  if (WORKER_URL) {
+    try {
+      const resp = await fetch(WORKER_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ dream: dreamData })
+      });
+      const data = await resp.json().catch(() => ({}));
+
+      if (resp.ok && data.story) {
+        storyBox.textContent = data.story;
+        storyBtn.style.display = 'none';
+        return;
+      }
+
+      // 429 = rate limit: toon vriendelijke boodschap, geen fallback
+      if (resp.status === 429) {
+        storyBox.innerHTML = `<div class="generating-indicator">${data.error || 'Dagelijkse limiet bereikt. Probeer morgen opnieuw.'}</div>`;
+        storyBtn.disabled = false;
+        storyBtn.textContent = '✨ Schrijf dit uit als verhaal';
+        return;
+      }
+
+      // Andere fouten: val terug op sjabloon zodat je niet met lege handen staat.
+      console.warn('AI-fout, sjabloon wordt gebruikt:', data);
+      storyBox.textContent = '⚠️ De AI is even niet bereikbaar — hier een sjabloonversie:\n\n' + buildStory();
+      storyBtn.style.display = 'none';
+      return;
+    } catch (e) {
+      console.warn('Netwerkfout, sjabloon wordt gebruikt:', e);
+      storyBox.textContent = '⚠️ Verbinding mislukt — hier een sjabloonversie:\n\n' + buildStory();
+      storyBtn.style.display = 'none';
+      return;
+    }
+  }
+
+  // Geen Worker geconfigureerd: gebruik sjabloon zoals voorheen.
   setTimeout(() => {
-    const story = buildStory();
-    storyBox.textContent = story;
+    storyBox.textContent = buildStory();
     storyBtn.style.display = 'none';
   }, 1500);
 }
