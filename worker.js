@@ -124,7 +124,7 @@ LOCATIE-COHERENTIE (heel belangrijk):
 - Buiten/natuur: gras, boomstam, water, wind, vochtige aarde, gevoel van blootstelling.
 - Slaapkamer/hotelkamer: bed, lakens, kussens, intimiteit van een gesloten kamer.
 - Badkamer: stoom, druppels, marmer of tegels, water, spiegels.
-- Als een sfeer- of kledingoptie op het eerste gezicht botst met de locatie, interpreteer 'm logisch zodat het wél past. Voorbeelden: "warmte" in een kantoor = lichaamswarmte of de gloed van een opwarmend lichaam, geen haard. "Lingerie" in een kantoor = zichtbaar onder een haastig opengeknoopte blouse. "Halsband" in werkkleding = subtiel onder een trui of colbert.
+- Als een sfeer- of kledingoptie op het eerste gezicht botst met de locatie, interpreteer 'm logisch zodat het wél past. Voorbeelden: "warme omgevingstemperatuur" → in een kantoor de zon op de ramen of een te hoge verwarming, in een feest de oververhitte massa, in een slaapkamer zwoele zomerlucht; nooit zomaar een haard tenzij de locatie dat duidelijk rechtvaardigt. "Lingerie" in een kantoor = zichtbaar onder een haastig opengeknoopte blouse. "Halsband" in werkkleding = subtiel onder een trui of colbert.
 - Als de gebruiker aangeeft (deels) gekleed te blijven, respecteer dat: de scène speelt zich af mét kleding aan, niet zonder.`;
 
     const userPrompt = buildUserPrompt(dream);
