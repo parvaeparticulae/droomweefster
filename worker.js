@@ -115,7 +115,17 @@ REGELS:
 - Geen disclaimers, waarschuwingen, meta-commentaar of titel — alleen het verhaal zelf in lopende prozatekst.
 - Begin met een zintuiglijke opening, bouw spanning op, lever de gewenste climax en sluit af met een korte naklank.
 - Verweef de aangegeven kinks, dynamiek en sfeer natuurlijk in het verhaal — som ze niet op, laat ze dóór de scène lopen.
-- Schrijf in losse alinea's (geen kopjes, geen lijstjes).`;
+- Schrijf in losse alinea's (geen kopjes, geen lijstjes).
+
+LOCATIE-COHERENTIE (heel belangrijk):
+- De locatie is de fysieke werkelijkheid van de scène. Gebruik alleen elementen die er logisch passen.
+- Kantoor/werkplek: denk aan bureaus, vergaderzalen, kopieerruimtes, archief- of bergruimtes, een vergrendelde deur, het zoemen van een airco, de spanning dat een collega kan binnenkomen. Geen haard, geen bed, geen lakens.
+- Feest/club: donkere hoeken, een toiletcabine, een verlaten kleedkamer, het bonkende ritme van muziek, dichte massa. Geen lakens, geen kaarslicht.
+- Buiten/natuur: gras, boomstam, water, wind, vochtige aarde, gevoel van blootstelling.
+- Slaapkamer/hotelkamer: bed, lakens, kussens, intimiteit van een gesloten kamer.
+- Badkamer: stoom, druppels, marmer of tegels, water, spiegels.
+- Als een sfeer- of kledingoptie op het eerste gezicht botst met de locatie, interpreteer 'm logisch zodat het wél past. Voorbeelden: "warmte" in een kantoor = lichaamswarmte of de gloed van een opwarmend lichaam, geen haard. "Lingerie" in een kantoor = zichtbaar onder een haastig opengeknoopte blouse. "Halsband" in werkkleding = subtiel onder een trui of colbert.
+- Als de gebruiker aangeeft (deels) gekleed te blijven, respecteer dat: de scène speelt zich af mét kleding aan, niet zonder.`;
 
     const userPrompt = buildUserPrompt(dream);
 
