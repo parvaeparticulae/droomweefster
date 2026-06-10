@@ -592,38 +592,7 @@
     <div class="step-label">Stap 1 van 10</div>
     <h2>Waar speelt je droom zich af?</h2>
     <p class="hint">Kies een locatie die je aanspreekt, of beschrijf je eigen plek.</p>
-    <div class="options">
-      <div class="option" data-value="slaapkamer" onclick="selectOption(this, 'location')">
-        <div class="icon">🛏️</div>
-        <div class="label">Slaapkamer</div>
-        <div class="desc">Intiem, vertrouwd, zacht licht</div>
-      </div>
-      <div class="option" data-value="hotelkamer" onclick="selectOption(this, 'location')">
-        <div class="icon">🏨</div>
-        <div class="label">Hotelkamer</div>
-        <div class="desc">Luxe, anoniem, opwindend</div>
-      </div>
-      <div class="option" data-value="buiten" onclick="selectOption(this, 'location')">
-        <div class="icon">🌿</div>
-        <div class="label">Buiten / natuur</div>
-        <div class="desc">Verborgen plek, spanning</div>
-      </div>
-      <div class="option" data-value="bad" onclick="selectOption(this, 'location')">
-        <div class="icon">🛁</div>
-        <div class="label">Badkamer</div>
-        <div class="desc">Warm water, stoom, sensualiteit</div>
-      </div>
-      <div class="option" data-value="kantoor" onclick="selectOption(this, 'location')">
-        <div class="icon">💼</div>
-        <div class="label">Kantoor / werkplek</div>
-        <div class="desc">Verboden, spannend, stiekem</div>
-      </div>
-      <div class="option" data-value="feest" onclick="selectOption(this, 'location')">
-        <div class="icon">🥂</div>
-        <div class="label">Feest / club</div>
-        <div class="desc">Muziek, massa, anonimiteit</div>
-      </div>
-    </div>
+    <div class="options" id="locationOptions"></div>
     <input type="text" id="locationCustom" placeholder="Of typ je eigen locatie..." oninput="handleCustomInput('locationCustom', this)">
   </div>
 
@@ -790,23 +759,7 @@
     <div class="step-label">Stap 8 van 10</div>
     <h2>Hoe begint de droom?</h2>
     <p class="hint">Het eerste moment. Hoe kom je in de situatie terecht?</p>
-    <div class="options single-col">
-      <div class="option" data-value="Ik word wakker en voel handen over mijn lichaam glijden" onclick="selectOption(this, 'opening')">
-        <div class="label">Gewekt door aanraking</div>
-      </div>
-      <div class="option" data-value="Ik word zonder waarschuwing tegen de muur geduwd" onclick="selectOption(this, 'opening')">
-        <div class="label">Onverwacht overrompeld</div>
-      </div>
-      <div class="option" data-value="We kijken elkaar aan en de spanning is onhoudbaar" onclick="selectOption(this, 'opening')">
-        <div class="label">Langzaam opbouwende spanning</div>
-      </div>
-      <div class="option" data-value="Ik krijg een instructie: kleed je uit en wacht op me" onclick="selectOption(this, 'opening')">
-        <div class="label">Een bevel dat alles in gang zet</div>
-      </div>
-      <div class="option" data-value="Ik word geblinddoekt en weet niet wat er gaat komen" onclick="selectOption(this, 'opening')">
-        <div class="label">Geblinddoekt — geen controle</div>
-      </div>
-    </div>
+    <div class="options single-col" id="openingOptions"></div>
     <textarea id="openingCustom" placeholder="Of beschrijf je eigen opening..." oninput="handleCustomInput('openingExtra', this)"></textarea>
   </div>
 
@@ -1513,9 +1466,70 @@ function renderChipPool(containerId, poolKey, dataKey, count) {
   }).join('');
 }
 
+// ===== OPTION POOLS (grote tegels: locaties + openingen) =====
+// Net als bij chips: pool is veel groter dan wat per ronde wordt getoond,
+// zodat elke restart een verse mix laat zien.
+const OPTION_POOLS = {
+  location: [
+    { value: "slaapkamer",   icon: "🛏️", label: "Slaapkamer",          desc: "Intiem, vertrouwd, zacht licht" },
+    { value: "hotelkamer",   icon: "🏨", label: "Hotelkamer",          desc: "Luxe, anoniem, opwindend" },
+    { value: "buiten",       icon: "🌿", label: "Buiten / natuur",     desc: "Verborgen plek, spanning" },
+    { value: "bad",          icon: "🛁", label: "Badkamer",            desc: "Warm water, stoom, sensualiteit" },
+    { value: "kantoor",      icon: "💼", label: "Kantoor / werkplek",  desc: "Verboden, spannend, stiekem" },
+    { value: "feest",        icon: "🥂", label: "Feest / club",        desc: "Muziek, massa, anonimiteit" },
+    { value: "auto",         icon: "🚗", label: "Auto / parkeerplaats", desc: "Krappe ruimte, verboden plek" },
+    { value: "strand",       icon: "🏖️", label: "Strand",              desc: "Zand, golven, openheid" },
+    { value: "bibliotheek",  icon: "📚", label: "Bibliotheek",         desc: "Stilte, fluisteren, betrapt-risico" },
+    { value: "balkon",       icon: "🌃", label: "Balkon / dakterras",  desc: "Buitenlucht, blikken van beneden" },
+    { value: "keuken",       icon: "🍷", label: "Keuken",              desc: "Aanrecht, midden in het huis" },
+    { value: "lift",         icon: "🛗", label: "Lift",                desc: "Klein, snel, kan elk moment stoppen" },
+    { value: "sauna",        icon: "🧖", label: "Spa / sauna",         desc: "Stoom, hitte, ontspanning" },
+    { value: "hut",          icon: "🏡", label: "Afgelegen huisje",    desc: "Geen buren, alleen jullie" },
+    { value: "trein",        icon: "🚆", label: "Trein / coupé",       desc: "Reizen, ritme, vreemden vlakbij" },
+    { value: "zwembad",      icon: "🏊", label: "Zwembad",             desc: "Water, glad, half-naakte lichamen" }
+  ],
+  opening: [
+    { value: "Ik word wakker en voel handen over mijn lichaam glijden", label: "Gewekt door aanraking" },
+    { value: "Ik word zonder waarschuwing tegen de muur geduwd",        label: "Onverwacht overrompeld" },
+    { value: "We kijken elkaar aan en de spanning is onhoudbaar",       label: "Langzaam opbouwende spanning" },
+    { value: "Ik krijg een instructie: kleed je uit en wacht op me",    label: "Een bevel dat alles in gang zet" },
+    { value: "Ik word geblinddoekt en weet niet wat er gaat komen",     label: "Geblinddoekt — geen controle" },
+    { value: "Een blik dwars door een drukke ruimte trekt me naar zich toe", label: "Een blik over een drukke ruimte" },
+    { value: "Een sms die ik niet had verwacht — instructies op mijn telefoon", label: "Een sms die alles verandert" },
+    { value: "Een hand vindt me stiekem onder tafel terwijl anderen praten", label: "Stiekem onder tafel" },
+    { value: "Ik neem zelf het initiatief — niet meer wachten, gewoon doen", label: "Ik neem zelf het initiatief" },
+    { value: "Een dans op een feest die langzaam veel te dichtbij komt", label: "Een dans die te dichtbij komt" },
+    { value: "Een onverwacht bezoek aan de deur, laat op de avond",     label: "Onverwacht bezoek 's avonds" },
+    { value: "Een misverstand dat snel iets heel anders wordt",         label: "Een misverstand met gevolgen" },
+    { value: "Een opname die ik 'per ongeluk' aan de gang zet",         label: "Een opname die meeluistert" }
+  ]
+};
+
+// Containers + welke pool, dataKey, en hoeveel zichtbaar per ronde.
+const OPTION_LAYOUT = {
+  locationOptions: { pool: 'location', key: 'location', show: 6 },
+  openingOptions:  { pool: 'opening',  key: 'opening',  show: 5 }
+};
+
+function renderOptionPool(containerId, poolKey, dataKey, count) {
+  const container = document.getElementById(containerId);
+  if (!container) return;
+  const pool = OPTION_POOLS[poolKey] || [];
+  const picks = shuffleArray(pool).slice(0, count);
+  container.innerHTML = picks.map(item => {
+    const icon = item.icon ? `<div class="icon">${escapeHtml(item.icon)}</div>` : '';
+    const label = `<div class="label">${escapeHtml(item.label)}</div>`;
+    const desc = item.desc ? `<div class="desc">${escapeHtml(item.desc)}</div>` : '';
+    return `<div class="option" data-value="${escapeHtml(item.value)}" onclick="selectOption(this, '${dataKey}')">${icon}${label}${desc}</div>`;
+  }).join('');
+}
+
 function renderAllChips() {
   for (const [containerId, cfg] of Object.entries(CHIP_LAYOUT)) {
     renderChipPool(containerId, cfg.pool, cfg.key, cfg.show);
+  }
+  for (const [containerId, cfg] of Object.entries(OPTION_LAYOUT)) {
+    renderOptionPool(containerId, cfg.pool, cfg.key, cfg.show);
   }
 }
 
