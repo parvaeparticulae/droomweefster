@@ -803,18 +803,43 @@
     <textarea id="escalationCustom" placeholder="Of beschrijf je eigen opbouw — wat doet de spanning groeien?" oninput="handleCustomInput('escalationExtra', this)"></textarea>
 
     <div class="step-label" style="margin-top: 10px;">Het hoogtepunt is...</div>
+    <p class="hint" style="margin-top: -8px;">Hoeft niet per se een orgasme te zijn — sommige diepste momenten gebeuren juist op de rand.</p>
     <div class="options single-col">
       <div class="option" data-value="een overweldigend, langgerekt orgasme" onclick="selectOption(this, 'climax')">
         <div class="label">Langzaam en overweldigend</div>
+        <div class="desc">Een orgasme dat blijft komen en alles overspoelt</div>
       </div>
       <div class="option" data-value="ruw, wild en ongecontroleerd samenkomen" onclick="selectOption(this, 'climax')">
         <div class="label">Ruw en ongecontroleerd</div>
+        <div class="desc">Wild, rauw, jullie komen samen in een explosie</div>
       </div>
       <div class="option" data-value="gedwongen klaarkomen na lang uitstel" onclick="selectOption(this, 'climax')">
         <div class="label">Eindelijk mogen na denial</div>
+        <div class="desc">Na al het wachten, het smeken, krijg je eindelijk toestemming</div>
       </div>
       <div class="option" data-value="meerdere orgasmes achter elkaar" onclick="selectOption(this, 'climax')">
         <div class="label">Meerdere golven</div>
+        <div class="desc">Golf na golf, je weet niet meer waar de ene stopt</div>
+      </div>
+      <div class="option" data-value="synchroon samen klaarkomen, op exact hetzelfde moment" onclick="selectOption(this, 'climax')">
+        <div class="label">Samen, op hetzelfde moment</div>
+        <div class="desc">Gelijktijdig, ogen in elkaar, een gedeelde val</div>
+      </div>
+      <div class="option" data-value="naar de rand gebracht en daar achtergelaten zonder vrijlating, in een staat van intens verlangen — geen orgasme" onclick="selectOption(this, 'climax')">
+        <div class="label">Op de rand achtergelaten</div>
+        <div class="desc">Geen orgasme — wel een lichaam dat trilt van wat het niet kreeg</div>
+      </div>
+      <div class="option" data-value="vlak voor het hoogtepunt onderbroken door iets onverwachts — de spanning blijft hangen, het moment komt nooit" onclick="selectOption(this, 'climax')">
+        <div class="label">Onderbroken vlak voor de top</div>
+        <div class="desc">Een onverwachte interruptie — het hoogtepunt komt nooit, de spanning blijft</div>
+      </div>
+      <div class="option" data-value="geen klaarkomen maar een diep moment van overgave: een gefluisterde bekentenis, een belofte, of een claim die alles tussen jullie verandert" onclick="selectOption(this, 'climax')">
+        <div class="label">Overgave zonder orgasme</div>
+        <div class="desc">Een fluistering, een bekentenis, een onuitgesproken claim — geen lichamelijk hoogtepunt, wel een emotioneel</div>
+      </div>
+      <div class="option" data-value="een geruïneerd orgasme: op het allerhoogste punt wordt de stimulatie weggetrokken zodat het niet vol kan komen" onclick="selectOption(this, 'climax')">
+        <div class="label">Geruïneerd orgasme</div>
+        <div class="desc">Op het hoogste punt: weggetrokken, kan niet vol komen — gefrustreerd en onbevredigd</div>
       </div>
     </div>
     <textarea id="climaxCustom" placeholder="Eigen beschrijving van de climax..." oninput="handleCustomInput('climaxExtra', this)"></textarea>
@@ -1895,7 +1920,12 @@ function buildStory() {
       'een overweldigend, langgerekt orgasme': 'Het hoogtepunt bouwt langzaam op, als een golf die steeds hoger wordt, tot het je volledig overspoelt. Langgerekt, overweldigend, allesomvattend.',
       'ruw, wild en ongecontroleerd samenkomen': 'Het einde is ruw en ongecontroleerd. Lichamen bewegen wild, ademhaling is rauw, en jullie komen samen in een explosie van opgekropte spanning.',
       'gedwongen klaarkomen na lang uitstel': '"Nu." Eén woord. Na al het wachten, al het smeken, mag je eindelijk. En het is intenser dan je ooit had kunnen voorstellen.',
-      'meerdere orgasmes achter elkaar': 'Het eerste orgasme is pas het begin. Nog voor je kunt bijkomen, bouwt het volgende al op. Golf na golf, tot je niet meer weet waar de ene ophoudt en de andere begint.'
+      'meerdere orgasmes achter elkaar': 'Het eerste orgasme is pas het begin. Nog voor je kunt bijkomen, bouwt het volgende al op. Golf na golf, tot je niet meer weet waar de ene ophoudt en de andere begint.',
+      'synchroon samen klaarkomen, op exact hetzelfde moment': 'Jullie ogen vinden elkaar op precies dat moment. Geen woorden, alleen herkenning. En dan, samen, exact op hetzelfde moment, vallen jullie tegelijk — een gedeelde val die jullie nog langer aan elkaar bindt.',
+      'naar de rand gebracht en daar achtergelaten zonder vrijlating, in een staat van intens verlangen — geen orgasme': 'En dan, precies wanneer je denkt dat het komt, stopt alles. Geen vrijlating. Je lichaam trilt, smeekt, maar het hoogtepunt blijft uit. Je wordt achtergelaten op die rand — verlangend, leeg en vol tegelijk.',
+      'vlak voor het hoogtepunt onderbroken door iets onverwachts — de spanning blijft hangen, het moment komt nooit': 'Iets onderbreekt het moment. Een geluid, een schrik, een onverwachte stem. Het hoogtepunt komt niet. De spanning blijft als een wolk in de kamer hangen, zwaar en onafgemaakt — een belofte voor een ander moment, een andere keer.',
+      'geen klaarkomen maar een diep moment van overgave: een gefluisterde bekentenis, een belofte, of een claim die alles tussen jullie verandert': 'Geen orgasme. Iets anders. Een fluistering in je oor, een paar woorden die je tot in je botten voelt. Een bekentenis, een belofte, een claim. Geen lichaam dat ontlaadt — wel iets tussen jullie dat voorgoed is veranderd.',
+      'een geruïneerd orgasme: op het allerhoogste punt wordt de stimulatie weggetrokken zodat het niet vol kan komen': 'Op het allerhoogste punt, precies wanneer het zou komen, wordt alles weggetrokken. Je lichaam stuiptrekt, probeert, maar het hoogtepunt komt niet vol. Een onvoltooide ontlading, een gefrustreerd lichaam, en die wetende blik van de ander.'
     };
     const climaxText = climaxTexts[climax] || climax;
     paragraphs.push(climaxText);

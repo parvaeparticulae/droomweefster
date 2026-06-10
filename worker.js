@@ -113,7 +113,7 @@ REGELS:
 - Expliciteit: ${explNote}
 - Alle personen zijn volwassen (18+).
 - Geen disclaimers, waarschuwingen, meta-commentaar of titel — alleen het verhaal zelf in lopende prozatekst.
-- Begin met een zintuiglijke opening, bouw spanning op, lever de gewenste climax en sluit af met een korte naklank.
+- Begin met een zintuiglijke opening, bouw spanning op, en lever exact het gewenste hoogtepunt — dat hoeft NIET altijd een orgasme te zijn: het kan ook een onderbreking, een achterlating-op-de-rand, een geruïneerd orgasme, of een moment van overgave/bekentenis zonder klaarkomen zijn. Volg precies wat de gebruiker koos. Sluit af met een korte naklank die past bij de aard van het hoogtepunt.
 - Verweef de aangegeven kinks, dynamiek en sfeer natuurlijk in het verhaal — som ze niet op, laat ze dóór de scène lopen.
 - Schrijf in losse alinea's (geen kopjes, geen lijstjes).
 
