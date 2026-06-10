@@ -409,6 +409,25 @@
   }
   .restart-btn:hover { border-color: var(--accent); color: var(--text); }
 
+  .edit-btn {
+    width: 100%;
+    padding: 13px;
+    background: rgba(155, 89, 182, 0.12);
+    color: var(--accent-light);
+    border: 1px solid var(--accent);
+    border-radius: 12px;
+    font-family: inherit;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: all 0.2s;
+  }
+  .edit-btn:hover {
+    background: rgba(155, 89, 182, 0.22);
+    box-shadow: 0 4px 12px var(--accent-glow);
+  }
+
   .intensity-labels {
     display: flex;
     justify-content: space-between;
@@ -888,7 +907,8 @@
     <button class="story-btn" id="storyBtn" onclick="generateStory()" style="display:none">
       ✨ Schrijf dit uit als verhaal
     </button>
-    <button class="restart-btn" onclick="restart()">Opnieuw beginnen</button>
+    <button class="edit-btn" onclick="editDream()">✏️ Iets aanpassen — keuzes blijven bewaard</button>
+    <button class="restart-btn" onclick="restart()">Opnieuw beginnen (alles wissen)</button>
   </div>
 
   <div class="nav-buttons" id="navButtons">
@@ -995,6 +1015,29 @@ function confirmRestart() {
   if (confirm("Alle keuzes wissen en opnieuw beginnen?")) {
     restart();
   }
+}
+
+// ===== EDIT DREAM =====
+// Terug naar de wizard zonder iets te wissen. Alle keuzes, sliders en
+// tekstvelden blijven staan — je kan met Terug/Volgende navigeren naar
+// wat je wil veranderen en op het eind opnieuw genereren.
+function editDream() {
+  document.querySelector(`.step[data-step="${currentStep}"]`).classList.remove('active');
+  currentStep = 0;
+  document.querySelector('.step[data-step="0"]').classList.add('active');
+  updateUI();
+}
+
+// Stelt de "Schrijf als verhaal"-knop in juiste staat: zichtbaar, klikbaar,
+// en met label dat past bij of er al een verhaal is of niet.
+function setStoryBtnReady() {
+  const storyBtn = document.getElementById('storyBtn');
+  const storyBox = document.getElementById('storyBox');
+  const hasStory = storyBox.textContent.trim().length > 0
+                   && !storyBox.querySelector('.generating-indicator');
+  storyBtn.style.display = 'block';
+  storyBtn.disabled = false;
+  storyBtn.textContent = hasStory ? '🔄 Schrijf opnieuw' : '✨ Schrijf dit uit als verhaal';
 }
 
 // ===== WIZARD LOGIC =====
@@ -1641,13 +1684,10 @@ function generateResult() {
 
   document.getElementById('resultBox').textContent = r;
 
-  const storyBtn = document.getElementById('storyBtn');
-  storyBtn.style.display = 'block';
-  storyBtn.disabled = false;
-  storyBtn.textContent = '✨ Schrijf dit uit als verhaal';
   document.getElementById('storyBox').textContent = '';
   document.getElementById('storyBox').classList.remove('visible');
   document.getElementById('resultBox').style.display = 'block';
+  setStoryBtnReady();
   currentOutputMode = 'scenario';
   updateToggleUI();
 }
@@ -1663,21 +1703,16 @@ function showOutput(mode) {
   if (mode === 'scenario') {
     resultBox.style.display = 'block';
     storyBox.classList.remove('visible');
-    storyBtn.style.display = 'block';
-    storyBtn.disabled = false;
-    storyBtn.textContent = '✨ Schrijf dit uit als verhaal';
+    setStoryBtnReady();
   } else {
     resultBox.style.display = 'none';
     if (storyBox.textContent.trim()) {
       storyBox.classList.add('visible');
-      storyBtn.style.display = 'none';
     } else {
       storyBox.innerHTML = '<div class="generating-indicator">Klik hieronder om het verhaal te laten schrijven</div>';
       storyBox.classList.add('visible');
-      storyBtn.style.display = 'block';
-      storyBtn.disabled = false;
-      storyBtn.textContent = '✨ Schrijf dit uit als verhaal';
     }
+    setStoryBtnReady();
   }
 }
 
@@ -1715,27 +1750,26 @@ async function generateStory() {
 
       if (resp.ok && data.story) {
         storyBox.textContent = data.story;
-        storyBtn.style.display = 'none';
+        setStoryBtnReady();
         return;
       }
 
       // 429 = rate limit: toon vriendelijke boodschap, geen fallback
       if (resp.status === 429) {
         storyBox.innerHTML = `<div class="generating-indicator">${data.error || 'Dagelijkse limiet bereikt. Probeer morgen opnieuw.'}</div>`;
-        storyBtn.disabled = false;
-        storyBtn.textContent = '✨ Schrijf dit uit als verhaal';
+        setStoryBtnReady();
         return;
       }
 
       // Andere fouten: val terug op sjabloon zodat je niet met lege handen staat.
       console.warn('AI-fout, sjabloon wordt gebruikt:', data);
       storyBox.textContent = '⚠️ De AI is even niet bereikbaar — hier een sjabloonversie:\n\n' + buildStory();
-      storyBtn.style.display = 'none';
+      setStoryBtnReady();
       return;
     } catch (e) {
       console.warn('Netwerkfout, sjabloon wordt gebruikt:', e);
       storyBox.textContent = '⚠️ Verbinding mislukt — hier een sjabloonversie:\n\n' + buildStory();
-      storyBtn.style.display = 'none';
+      setStoryBtnReady();
       return;
     }
   }
@@ -1743,7 +1777,7 @@ async function generateStory() {
   // Geen Worker geconfigureerd: gebruik sjabloon zoals voorheen.
   setTimeout(() => {
     storyBox.textContent = buildStory();
-    storyBtn.style.display = 'none';
+    setStoryBtnReady();
   }, 1500);
 }
 
