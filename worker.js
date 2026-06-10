@@ -183,6 +183,7 @@ function buildUserPrompt(d) {
   if (Array.isArray(d.moment) && d.moment.length) lines.push(`Moment: ${d.moment.join(", ")}`);
   if (Array.isArray(d.light) && d.light.length) lines.push(`Verlichting: ${d.light.join(", ")}`);
   if (Array.isArray(d.senses) && d.senses.length) lines.push(`Sfeer / zintuigen: ${d.senses.join(", ")}`);
+  if (d.atmosphereExtra) lines.push(`Eigen sfeer-/zintuigdetails: ${d.atmosphereExtra}`);
 
   const selfParts = [];
   if (Array.isArray(d.selfClothing) && d.selfClothing.length) selfParts.push(`draagt ${d.selfClothing.join(" en ")}`);
@@ -217,6 +218,7 @@ function buildUserPrompt(d) {
     "wisselend": "Wisselende machtsbalans gedurende het verhaal",
   };
   if (d.dynamic) lines.push(`\nDynamiek: ${dynLabels[d.dynamic] || d.dynamic} (intensiteit ${d.intensity}/5)`);
+  if (d.dynamicExtra) lines.push(`Eigen dynamiek-details: ${d.dynamicExtra}`);
 
   if (Array.isArray(d.kinks) && d.kinks.length) lines.push(`\nElementen om natuurlijk in te verweven: ${d.kinks.join(", ")}`);
   if (d.kinksExtra) lines.push(`Extra wensen rond elementen: ${d.kinksExtra}`);
@@ -224,6 +226,7 @@ function buildUserPrompt(d) {
   const opening = d.openingExtra || d.opening;
   if (opening) lines.push(`\nOpenscène: ${opening}`);
   if (Array.isArray(d.escalation) && d.escalation.length) lines.push(`Spanning bouwt op via: ${d.escalation.join(", ")}`);
+  if (d.escalationExtra) lines.push(`Eigen escalatie-/opbouw-details: ${d.escalationExtra}`);
   const climax = d.climaxExtra || d.climax;
   if (climax) lines.push(`Climax: ${climax}`);
 

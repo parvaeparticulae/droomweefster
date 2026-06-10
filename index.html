@@ -615,35 +615,15 @@
     <p class="hint">Kies alles wat de sfeer van je droom bepaalt.</p>
 
     <div class="step-label" style="margin-top: 8px;">Moment</div>
-    <div class="chips" id="momentChips">
-      <div class="chip" data-value="late avond" onclick="toggleChip(this, 'moment')">Late avond</div>
-      <div class="chip" data-value="nacht" onclick="toggleChip(this, 'moment')">Diep in de nacht</div>
-      <div class="chip" data-value="ochtend" onclick="toggleChip(this, 'moment')">Luie ochtend</div>
-      <div class="chip" data-value="middag" onclick="toggleChip(this, 'moment')">Onverwacht overdag</div>
-    </div>
+    <div class="chips" id="momentChips"></div>
 
     <div class="step-label" style="margin-top: 8px;">Verlichting</div>
-    <div class="chips" id="lightChips">
-      <div class="chip" data-value="kaarslicht" onclick="toggleChip(this, 'light')">Kaarslicht</div>
-      <div class="chip" data-value="halfdonker" onclick="toggleChip(this, 'light')">Halfdonker</div>
-      <div class="chip" data-value="pikdonker" onclick="toggleChip(this, 'light')">Pikdonker</div>
-      <div class="chip" data-value="maanlicht" onclick="toggleChip(this, 'light')">Maanlicht</div>
-      <div class="chip" data-value="fel licht" onclick="toggleChip(this, 'light')">Fel licht — alles zichtbaar</div>
-    </div>
+    <div class="chips" id="lightChips"></div>
 
     <div class="step-label" style="margin-top: 8px;">Zintuigen</div>
-    <div class="chips" id="sensesChips">
-      <div class="chip" data-value="muziek op de achtergrond" onclick="toggleChip(this, 'senses')">Muziek</div>
-      <div class="chip" data-value="stilte, alleen ademhaling" onclick="toggleChip(this, 'senses')">Stilte</div>
-      <div class="chip" data-value="geur van parfum" onclick="toggleChip(this, 'senses')">Parfum</div>
-      <div class="chip" data-value="warme, broeierige omgevingstemperatuur" onclick="toggleChip(this, 'senses')">Warmte</div>
-      <div class="chip" data-value="koele omgevingstemperatuur" onclick="toggleChip(this, 'senses')">Koelte</div>
-      <div class="chip" data-value="koel oppervlak tegen je huid" onclick="toggleChip(this, 'senses')">Koel oppervlak</div>
-      <div class="chip" data-value="regen tegen het raam" onclick="toggleChip(this, 'senses')">Regen</div>
-      <div class="chip" data-value="zijden lakens" onclick="toggleChip(this, 'senses')">Zijden lakens</div>
-      <div class="chip" data-value="geur van leer" onclick="toggleChip(this, 'senses')">Geur van leer</div>
-      <div class="chip" data-value="smaak van wijn of cocktail op de lippen" onclick="toggleChip(this, 'senses')">Wijn op de lippen</div>
-    </div>
+    <div class="chips" id="sensesChips"></div>
+
+    <textarea id="atmosphereCustom" placeholder="Andere sfeer- of zintuig-details (geur, geluid, temperatuur...)..." oninput="handleCustomInput('atmosphereExtra', this)"></textarea>
   </div>
 
   <!-- STAP 3: Wie (data-step 2) -->
@@ -697,40 +677,13 @@
     <p class="hint">Hoe wil je jezelf zien? Alles mag — dit is jouw fantasie.</p>
 
     <div class="step-label" style="margin-top: 4px;">Kleding / staat</div>
-    <div class="chips" id="selfClothingChips">
-      <div class="chip" data-value="verleidelijke lingerie" onclick="toggleChip(this, 'selfClothing')">Lingerie</div>
-      <div class="chip" data-value="een lang zijden gewaad" onclick="toggleChip(this, 'selfClothing')">Zijden gewaad</div>
-      <div class="chip" data-value="strak jurkje" onclick="toggleChip(this, 'selfClothing')">Strak jurkje</div>
-      <div class="chip" data-value="zakelijke werkkleding (rok, blouse, pak)" onclick="toggleChip(this, 'selfClothing')">Werkkleding</div>
-      <div class="chip" data-value="naakt" onclick="toggleChip(this, 'selfClothing')">Naakt</div>
-      <div class="chip" data-value="zijn/haar overhemd" onclick="toggleChip(this, 'selfClothing')">Zijn/haar overhemd</div>
-      <div class="chip" data-value="leer of latex" onclick="toggleChip(this, 'selfClothing')">Leer / latex</div>
-      <div class="chip" data-value="halsband" onclick="toggleChip(this, 'selfClothing')">Halsband</div>
-      <div class="chip" data-value="kousen en jarretels" onclick="toggleChip(this, 'selfClothing')">Kousen & jarretels</div>
-      <div class="chip" data-value="grotendeels gekleed, alleen het noodzakelijke opzij geschoven" onclick="toggleChip(this, 'selfClothing')">Grotendeels gekleed</div>
-      <div class="chip" data-value="haastig, kleren niet uit maar opzij of opengeknoopt" onclick="toggleChip(this, 'selfClothing')">Haastig: kleren opzij</div>
-      <div class="chip" data-value="blouse losgeknoopt, rok omhoog getrokken" onclick="toggleChip(this, 'selfClothing')">Blouse open, rok op</div>
-    </div>
+    <div class="chips" id="selfClothingChips"></div>
 
     <div class="step-label" style="margin-top: 10px;">Hoe voel je je?</div>
-    <div class="chips" id="selfMoodChips">
-      <div class="chip" data-value="zelfverzekerd en verleidelijk" onclick="toggleChip(this, 'selfMood')">Zelfverzekerd</div>
-      <div class="chip" data-value="verlegen maar nieuwsgierig" onclick="toggleChip(this, 'selfMood')">Verlegen</div>
-      <div class="chip" data-value="onderdanig en gewillig" onclick="toggleChip(this, 'selfMood')">Onderdanig</div>
-      <div class="chip" data-value="uitdagend en brutaal" onclick="toggleChip(this, 'selfMood')">Uitdagend</div>
-      <div class="chip" data-value="overgegeven, volledig in vertrouwen" onclick="toggleChip(this, 'selfMood')">Overgegeven</div>
-      <div class="chip" data-value="hongerig en ongeduldig" onclick="toggleChip(this, 'selfMood')">Hongerig</div>
-    </div>
+    <div class="chips" id="selfMoodChips"></div>
 
     <div class="step-label" style="margin-top: 10px;">Uiterlijk</div>
-    <div class="chips" id="selfLookChips">
-      <div class="chip" data-value="los haar" onclick="toggleChip(this, 'selfLook')">Los haar</div>
-      <div class="chip" data-value="opgestoken haar / paardenstaart" onclick="toggleChip(this, 'selfLook')">Opgestoken haar</div>
-      <div class="chip" data-value="make-up, rode lippen" onclick="toggleChip(this, 'selfLook')">Opgemaakt</div>
-      <div class="chip" data-value="naturel, net uit bed" onclick="toggleChip(this, 'selfLook')">Naturel</div>
-      <div class="chip" data-value="parfum, net gedoucht" onclick="toggleChip(this, 'selfLook')">Net gedoucht</div>
-      <div class="chip" data-value="bezweet, verhit" onclick="toggleChip(this, 'selfLook')">Bezweet & verhit</div>
-    </div>
+    <div class="chips" id="selfLookChips"></div>
 
     <textarea id="selfCustom" placeholder="Andere details over hoe je eruitziet of je voelt..." oninput="handleCustomInput('selfExtra', this)"></textarea>
   </div>
@@ -742,43 +695,16 @@
     <p class="hint">Beschrijf degene die bij je is. Hoe gedetailleerder, hoe levendiger de droom.</p>
 
     <div class="step-label" style="margin-top: 4px;">Lichaamsbouw</div>
-    <div class="chips" id="otherBodyChips">
-      <div class="chip" data-value="gespierd en breed" onclick="toggleChip(this, 'otherBody')">Gespierd & breed</div>
-      <div class="chip" data-value="slank en lenig" onclick="toggleChip(this, 'otherBody')">Slank & lenig</div>
-      <div class="chip" data-value="lang en dominant aanwezig" onclick="toggleChip(this, 'otherBody')">Lang & imposant</div>
-      <div class="chip" data-value="zacht en vol" onclick="toggleChip(this, 'otherBody')">Zacht & vol</div>
-      <div class="chip" data-value="sterke handen" onclick="toggleChip(this, 'otherBody')">Sterke handen</div>
-    </div>
+    <div class="chips" id="otherBodyChips"></div>
 
     <div class="step-label" style="margin-top: 10px;">Uitstraling</div>
-    <div class="chips" id="otherVibeChips">
-      <div class="chip" data-value="kalm en beheerst, alles onder controle" onclick="toggleChip(this, 'otherVibe')">Kalm & beheerst</div>
-      <div class="chip" data-value="intens en bezitterig" onclick="toggleChip(this, 'otherVibe')">Intens & bezitterig</div>
-      <div class="chip" data-value="speels en plagend" onclick="toggleChip(this, 'otherVibe')">Speels & plagend</div>
-      <div class="chip" data-value="donker, mysterieus, onvoorspelbaar" onclick="toggleChip(this, 'otherVibe')">Donker & mysterieus</div>
-      <div class="chip" data-value="teder maar dwingend" onclick="toggleChip(this, 'otherVibe')">Teder maar dwingend</div>
-      <div class="chip" data-value="ruw en recht-door-zee" onclick="toggleChip(this, 'otherVibe')">Ruw & direct</div>
-    </div>
+    <div class="chips" id="otherVibeChips"></div>
 
     <div class="step-label" style="margin-top: 10px;">Kleding</div>
-    <div class="chips" id="otherClothingChips">
-      <div class="chip" data-value="pak, stropdas losgetrokken" onclick="toggleChip(this, 'otherClothing')">Pak & stropdas</div>
-      <div class="chip" data-value="zwart t-shirt, simpel" onclick="toggleChip(this, 'otherClothing')">Zwart t-shirt</div>
-      <div class="chip" data-value="overhemd, mouwen opgerold" onclick="toggleChip(this, 'otherClothing')">Overhemd</div>
-      <div class="chip" data-value="naakt, ontbloot" onclick="toggleChip(this, 'otherClothing')">Naakt</div>
-      <div class="chip" data-value="handdoek, net uit de douche" onclick="toggleChip(this, 'otherClothing')">Handdoek</div>
-      <div class="chip" data-value="leer, donkere kleding" onclick="toggleChip(this, 'otherClothing')">Leer & donker</div>
-      <div class="chip" data-value="uniform" onclick="toggleChip(this, 'otherClothing')">Uniform</div>
-    </div>
+    <div class="chips" id="otherClothingChips"></div>
 
     <div class="step-label" style="margin-top: 10px;">Stem & communicatie</div>
-    <div class="chips" id="otherVoiceChips">
-      <div class="chip" data-value="lage, diepe stem die bevelen fluistert" onclick="toggleChip(this, 'otherVoice')">Lage fluisterstem</div>
-      <div class="chip" data-value="zegt weinig, laat handen spreken" onclick="toggleChip(this, 'otherVoice')">Zwijgzaam, fysiek</div>
-      <div class="chip" data-value="dirty talk, zegt precies wat hij/zij gaat doen" onclick="toggleChip(this, 'otherVoice')">Dirty talk</div>
-      <div class="chip" data-value="prijst en beloont met woorden" onclick="toggleChip(this, 'otherVoice')">Prijzend</div>
-      <div class="chip" data-value="streng en kort, geen discussie" onclick="toggleChip(this, 'otherVoice')">Streng & kort</div>
-    </div>
+    <div class="chips" id="otherVoiceChips"></div>
 
     <textarea id="otherCustom" placeholder="Andere details: naam, uiterlijk, geur, bijzonderheden..." oninput="handleCustomInput('otherExtra', this)"></textarea>
   </div>
@@ -815,6 +741,8 @@
         <span>Intens & streng</span>
       </div>
     </div>
+
+    <textarea id="dynamicCustom" placeholder="Beschrijf je eigen dynamiek of bijzondere wensen rond de machtsverhouding..." oninput="handleCustomInput('dynamicExtra', this)"></textarea>
   </div>
 
   <!-- STAP 7: Kinks (data-step 6) -->
@@ -824,41 +752,16 @@
     <p class="hint">Kies alles wat je aanspreekt. Niets is verplicht, alles mag.</p>
 
     <div class="step-label" style="margin-top: 4px;">Zintuiglijk</div>
-    <div class="chips" id="kinksSensory">
-      <div class="chip" data-value="geblinddoekt" onclick="toggleChip(this, 'kinks')">Geblinddoekt</div>
-      <div class="chip" data-value="vastgebonden" onclick="toggleChip(this, 'kinks')">Vastgebonden</div>
-      <div class="chip" data-value="ijs & warmte" onclick="toggleChip(this, 'kinks')">Ijs & warmte</div>
-      <div class="chip" data-value="veren & zachte aanraking" onclick="toggleChip(this, 'kinks')">Veren & zacht</div>
-      <div class="chip" data-value="massage met olie" onclick="toggleChip(this, 'kinks')">Massage & olie</div>
-    </div>
+    <div class="chips" id="kinksSensory"></div>
 
     <div class="step-label" style="margin-top: 10px;">Controle</div>
-    <div class="chips" id="kinksControl">
-      <div class="chip" data-value="bevelen & gehoorzamen" onclick="toggleChip(this, 'kinks')">Bevelen</div>
-      <div class="chip" data-value="tease & denial" onclick="toggleChip(this, 'kinks')">Tease & denial</div>
-      <div class="chip" data-value="orgasmecontrole" onclick="toggleChip(this, 'kinks')">Orgasmecontrole</div>
-      <div class="chip" data-value="forced orgasm" onclick="toggleChip(this, 'kinks')">Gedwongen genot</div>
-      <div class="chip" data-value="roleplay" onclick="toggleChip(this, 'kinks')">Rollenspel</div>
-    </div>
+    <div class="chips" id="kinksControl"></div>
 
     <div class="step-label" style="margin-top: 10px;">Intenser</div>
-    <div class="chips" id="kinksIntense">
-      <div class="chip" data-value="spanking" onclick="toggleChip(this, 'kinks')">Spanking</div>
-      <div class="chip" data-value="haar trekken" onclick="toggleChip(this, 'kinks')">Haar trekken</div>
-      <div class="chip" data-value="beet in de nek" onclick="toggleChip(this, 'kinks')">Bijten</div>
-      <div class="chip" data-value="choking (licht)" onclick="toggleChip(this, 'kinks')">Keel vasthouden</div>
-      <div class="chip" data-value="impact play" onclick="toggleChip(this, 'kinks')">Impact play</div>
-      <div class="chip" data-value="pet play" onclick="toggleChip(this, 'kinks')">Pet play</div>
-    </div>
+    <div class="chips" id="kinksIntense"></div>
 
     <div class="step-label" style="margin-top: 10px;">Visueel & kleding</div>
-    <div class="chips" id="kinksVisual">
-      <div class="chip" data-value="lingerie" onclick="toggleChip(this, 'kinks')">Lingerie</div>
-      <div class="chip" data-value="leer & latex" onclick="toggleChip(this, 'kinks')">Leer & latex</div>
-      <div class="chip" data-value="halsband" onclick="toggleChip(this, 'kinks')">Halsband</div>
-      <div class="chip" data-value="uniform / kostuum" onclick="toggleChip(this, 'kinks')">Uniform</div>
-      <div class="chip" data-value="naakt terwijl de ander gekleed is" onclick="toggleChip(this, 'kinks')">CFNM / CMNF</div>
-    </div>
+    <div class="chips" id="kinksVisual"></div>
 
     <textarea id="kinksCustom" placeholder="Eigen toevoegingen of specifieke wensen..." oninput="handleCustomInput('kinksExtra', this)"></textarea>
   </div>
@@ -895,15 +798,9 @@
     <p class="hint">Wat maakt de droom intenser? Waar bouwt het naartoe?</p>
 
     <div class="step-label" style="margin-top: 4px;">De spanning stijgt door...</div>
-    <div class="chips" id="escalationChips">
-      <div class="chip" data-value="steeds explicieter dirty talk" onclick="toggleChip(this, 'escalation')">Dirty talk</div>
-      <div class="chip" data-value="steeds minder kleding" onclick="toggleChip(this, 'escalation')">Langzaam uitkleden</div>
-      <div class="chip" data-value="verandering van positie of locatie" onclick="toggleChip(this, 'escalation')">Positiewisseling</div>
-      <div class="chip" data-value="hij/zij neemt meer controle" onclick="toggleChip(this, 'escalation')">Meer controle</div>
-      <div class="chip" data-value="ik smeek om meer" onclick="toggleChip(this, 'escalation')">Smeken</div>
-      <div class="chip" data-value="iets onverwachts gebeurt" onclick="toggleChip(this, 'escalation')">Verrassing</div>
-      <div class="chip" data-value="worden betrapt of bekeken" onclick="toggleChip(this, 'escalation')">Risico betrapt te worden</div>
-    </div>
+    <div class="chips" id="escalationChips"></div>
+
+    <textarea id="escalationCustom" placeholder="Of beschrijf je eigen opbouw — wat doet de spanning groeien?" oninput="handleCustomInput('escalationExtra', this)"></textarea>
 
     <div class="step-label" style="margin-top: 10px;">Het hoogtepunt is...</div>
     <div class="options single-col">
@@ -1088,6 +985,7 @@ const dreamData = {
   moment: [],
   light: [],
   senses: [],
+  atmosphereExtra: '',
   who: '',
   whoName: '',
   whoDetail: '',
@@ -1101,18 +999,457 @@ const dreamData = {
   otherVoice: [],
   otherExtra: '',
   dynamic: '',
+  dynamicExtra: '',
   intensity: '3',
   kinks: [],
   kinksExtra: '',
   opening: '',
   openingExtra: '',
   escalation: [],
+  escalationExtra: '',
   climax: '',
   climaxExtra: '',
   explicitness: '3',
   length: '2',
   extra: ''
 };
+
+// ===== CHIP POOLS =====
+// Per categorie een veel langere lijst dan getoond wordt; bij elke wizard-start
+// kiest renderAllChips() een willekeurige subset, zodat de gebruiker steeds een
+// nieuwe mix ziet. Eigen ideeën kunnen altijd via het tekstveld op elke stap.
+const CHIP_POOLS = {
+  moment: [
+    "late avond",
+    "diep in de nacht",
+    "luie ochtend",
+    "onverwacht overdag",
+    "vroege ochtend, net wakker",
+    "schemering, net na zonsondergang",
+    "zonsopgang, eerste licht",
+    "einde van de werkdag",
+    "na middernacht, iedereen slaapt",
+    "siesta-uur in de middag"
+  ],
+  light: [
+    "kaarslicht",
+    "halfdonker",
+    "pikdonker",
+    "maanlicht",
+    "fel licht — alles zichtbaar",
+    "gedempt nachtlampje",
+    "flakkerend vuurschijnsel",
+    "rood neonlicht door het raam",
+    "straatlamp door de gordijnen",
+    "kil tl-licht",
+    "schemerlicht door dunne gordijnen"
+  ],
+  senses: [
+    "muziek op de achtergrond",
+    "stilte, alleen ademhaling",
+    "geur van parfum",
+    "warme, broeierige omgevingstemperatuur",
+    "koele omgevingstemperatuur",
+    "koel oppervlak tegen je huid",
+    "regen tegen het raam",
+    "zijden lakens",
+    "geur van leer",
+    "smaak van wijn of cocktail op de lippen",
+    "geur van rook of houtvuur",
+    "geur van zweet en huid",
+    "bonkend ritme van bassen",
+    "hard hout tegen je huid",
+    "smaak van zout op de lippen",
+    "ruwe stof, denim of wol",
+    "geur van koffie of espresso",
+    "sigarettenrook in de lucht",
+    "geluid van zwaar ademen",
+    "knetterend vuur op de achtergrond"
+  ],
+  selfClothing: [
+    "verleidelijke lingerie",
+    "een lang zijden gewaad",
+    "strak jurkje",
+    "zakelijke werkkleding (rok, blouse, pak)",
+    "naakt",
+    "zijn/haar overhemd",
+    "leer of latex",
+    "halsband",
+    "kousen en jarretels",
+    "grotendeels gekleed, alleen het noodzakelijke opzij geschoven",
+    "haastig, kleren niet uit maar opzij of opengeknoopt",
+    "blouse losgeknoopt, rok omhoog getrokken",
+    "alleen een handdoek",
+    "sportkleding, nog bezweet",
+    "avondjurk en hoge hakken",
+    "doorzichtige stof",
+    "hoge hakken en niets meer",
+    "T-shirt zonder onderbroek",
+    "visnetkousen",
+    "oversized trui zonder iets eronder"
+  ],
+  selfMood: [
+    "zelfverzekerd en verleidelijk",
+    "verlegen maar nieuwsgierig",
+    "onderdanig en gewillig",
+    "uitdagend en brutaal",
+    "overgegeven, volledig in vertrouwen",
+    "hongerig en ongeduldig",
+    "speels en plagend",
+    "aarzelend, op het randje van bezwijken",
+    "afwachtend en gespannen",
+    "emotioneel kwetsbaar",
+    "triomfantelijk en machtig",
+    "verloren in fantasie"
+  ],
+  selfLook: [
+    "los haar",
+    "opgestoken haar / paardenstaart",
+    "make-up, rode lippen",
+    "naturel, net uit bed",
+    "parfum, net gedoucht",
+    "bezweet, verhit",
+    "vlechten",
+    "glanzende huid in het licht",
+    "zonnebruin",
+    "bleek tegen het donker af",
+    "elegante sleutelbeenderen ontbloot"
+  ],
+  otherBody: [
+    "gespierd en breed",
+    "slank en lenig",
+    "lang en dominant aanwezig",
+    "zacht en vol",
+    "sterke handen",
+    "atletisch en stevig",
+    "brede schouders",
+    "behaarde borst",
+    "gladde huid",
+    "getatoeëerd",
+    "gespierde dijen",
+    "ranke vingers",
+    "elegante nek"
+  ],
+  otherVibe: [
+    "kalm en beheerst, alles onder controle",
+    "intens en bezitterig",
+    "speels en plagend",
+    "donker, mysterieus, onvoorspelbaar",
+    "teder maar dwingend",
+    "ruw en recht-door-zee",
+    "gevaarlijk-charmant",
+    "aanvoerend zonder een woord",
+    "geduldig wachtend tot jij niet meer kan",
+    "ongeduldig en hongerig",
+    "afstandelijk-koel, en dat windt op",
+    "vol ingehouden energie"
+  ],
+  otherClothing: [
+    "pak, stropdas losgetrokken",
+    "zwart t-shirt, simpel",
+    "overhemd, mouwen opgerold",
+    "naakt, ontbloot",
+    "handdoek, net uit de douche",
+    "leer, donkere kleding",
+    "uniform",
+    "jeans en t-shirt",
+    "sportkleding, nog bezweet",
+    "regenjas, net van buiten gekomen",
+    "alleen een colbert, niets eronder",
+    "arbeiders-/werkkleding (verfvlekken, stof)"
+  ],
+  otherVoice: [
+    "lage, diepe stem die bevelen fluistert",
+    "zegt weinig, laat handen spreken",
+    "dirty talk, zegt precies wat hij/zij gaat doen",
+    "prijst en beloont met woorden",
+    "streng en kort, geen discussie",
+    "zwoel buitenlands accent (Frans, Italiaans, Spaans)",
+    "hees, alsof net geschreeuwd",
+    "ademend en intens",
+    "zacht in je oor, bijna fluisterend",
+    "diepe lach die je doet huiveren"
+  ],
+  kinksSensory: [
+    "geblinddoekt",
+    "vastgebonden",
+    "ijs & warmte",
+    "veren & zachte aanraking",
+    "massage met olie",
+    "oorgefluister",
+    "zachte muziek tegen de huid",
+    "geur-stimulatie (parfum, kruiden)"
+  ],
+  kinksControl: [
+    "bevelen & gehoorzamen",
+    "tease & denial",
+    "orgasmecontrole",
+    "forced orgasm",
+    "roleplay",
+    "edging tot het bijna pijn doet",
+    "permissie vragen om iets te doen",
+    "beloningssysteem"
+  ],
+  kinksIntense: [
+    "spanking",
+    "haar trekken",
+    "beet in de nek",
+    "choking (licht)",
+    "impact play",
+    "pet play",
+    "wax (warme druppels)",
+    "speeksel-/keelspel"
+  ],
+  kinksVisual: [
+    "lingerie",
+    "leer & latex",
+    "halsband",
+    "uniform / kostuum",
+    "naakt terwijl de ander gekleed is",
+    "gemaskerd (gezicht half verborgen)",
+    "hoge hakken",
+    "leiband"
+  ],
+  escalation: [
+    "steeds explicieter dirty talk",
+    "steeds minder kleding",
+    "verandering van positie of locatie",
+    "hij/zij neemt meer controle",
+    "ik smeek om meer",
+    "iets onverwachts gebeurt",
+    "worden betrapt of bekeken",
+    "toevoeging van iemand anders",
+    "introductie van een speeltje",
+    "onverwachte kus uit het niets",
+    "iemand neemt het op",
+    "instructies via telefoon of voicebericht"
+  ]
+};
+
+// Welke container krijgt welke pool, met welke dataKey en hoeveel chips zichtbaar.
+const CHIP_LAYOUT = {
+  momentChips:        { pool: 'moment',        key: 'moment',        show: 5 },
+  lightChips:         { pool: 'light',         key: 'light',         show: 5 },
+  sensesChips:        { pool: 'senses',        key: 'senses',        show: 8 },
+  selfClothingChips:  { pool: 'selfClothing',  key: 'selfClothing',  show: 8 },
+  selfMoodChips:      { pool: 'selfMood',      key: 'selfMood',      show: 6 },
+  selfLookChips:      { pool: 'selfLook',      key: 'selfLook',      show: 6 },
+  otherBodyChips:     { pool: 'otherBody',     key: 'otherBody',     show: 6 },
+  otherVibeChips:     { pool: 'otherVibe',     key: 'otherVibe',     show: 6 },
+  otherClothingChips: { pool: 'otherClothing', key: 'otherClothing', show: 7 },
+  otherVoiceChips:    { pool: 'otherVoice',    key: 'otherVoice',    show: 5 },
+  kinksSensory:       { pool: 'kinksSensory',  key: 'kinks',         show: 5 },
+  kinksControl:       { pool: 'kinksControl',  key: 'kinks',         show: 5 },
+  kinksIntense:       { pool: 'kinksIntense',  key: 'kinks',         show: 5 },
+  kinksVisual:        { pool: 'kinksVisual',   key: 'kinks',         show: 5 },
+  escalationChips:    { pool: 'escalation',    key: 'escalation',    show: 7 }
+};
+
+// Kortere knop-labels voor de UI. Als een value er niet in staat, valt het terug op de value zelf.
+const CHIP_LABELS = {
+  "diep in de nacht": "Diep in de nacht",
+  "luie ochtend": "Luie ochtend",
+  "onverwacht overdag": "Onverwacht overdag",
+  "vroege ochtend, net wakker": "Vroege ochtend",
+  "schemering, net na zonsondergang": "Schemering",
+  "zonsopgang, eerste licht": "Zonsopgang",
+  "einde van de werkdag": "Einde werkdag",
+  "na middernacht, iedereen slaapt": "Na middernacht",
+  "siesta-uur in de middag": "Siesta-uur",
+  "fel licht — alles zichtbaar": "Fel licht",
+  "gedempt nachtlampje": "Nachtlampje",
+  "flakkerend vuurschijnsel": "Vuurschijnsel",
+  "rood neonlicht door het raam": "Rood neon",
+  "straatlamp door de gordijnen": "Straatlamp",
+  "kil tl-licht": "Kil tl-licht",
+  "schemerlicht door dunne gordijnen": "Schemerlicht",
+  "muziek op de achtergrond": "Muziek",
+  "stilte, alleen ademhaling": "Stilte",
+  "geur van parfum": "Parfum",
+  "warme, broeierige omgevingstemperatuur": "Warmte",
+  "koele omgevingstemperatuur": "Koelte",
+  "koel oppervlak tegen je huid": "Koel oppervlak",
+  "regen tegen het raam": "Regen",
+  "zijden lakens": "Zijden lakens",
+  "geur van leer": "Geur van leer",
+  "smaak van wijn of cocktail op de lippen": "Wijn op de lippen",
+  "geur van rook of houtvuur": "Houtvuur",
+  "geur van zweet en huid": "Zweet & huid",
+  "bonkend ritme van bassen": "Bonkende bassen",
+  "hard hout tegen je huid": "Hard hout",
+  "smaak van zout op de lippen": "Zout op lippen",
+  "ruwe stof, denim of wol": "Ruwe stof",
+  "geur van koffie of espresso": "Koffiegeur",
+  "sigarettenrook in de lucht": "Sigarettenrook",
+  "geluid van zwaar ademen": "Zwaar ademen",
+  "knetterend vuur op de achtergrond": "Knetterend vuur",
+  "verleidelijke lingerie": "Lingerie",
+  "een lang zijden gewaad": "Zijden gewaad",
+  "strak jurkje": "Strak jurkje",
+  "zakelijke werkkleding (rok, blouse, pak)": "Werkkleding",
+  "naakt": "Naakt",
+  "zijn/haar overhemd": "Zijn/haar overhemd",
+  "leer of latex": "Leer / latex",
+  "halsband": "Halsband",
+  "kousen en jarretels": "Kousen & jarretels",
+  "grotendeels gekleed, alleen het noodzakelijke opzij geschoven": "Grotendeels gekleed",
+  "haastig, kleren niet uit maar opzij of opengeknoopt": "Haastig: kleren opzij",
+  "blouse losgeknoopt, rok omhoog getrokken": "Blouse open, rok op",
+  "alleen een handdoek": "Alleen een handdoek",
+  "sportkleding, nog bezweet": "Sportkleding",
+  "avondjurk en hoge hakken": "Avondjurk & hakken",
+  "doorzichtige stof": "Doorzichtige stof",
+  "hoge hakken en niets meer": "Hakken & niets meer",
+  "T-shirt zonder onderbroek": "T-shirt only",
+  "visnetkousen": "Visnetkousen",
+  "oversized trui zonder iets eronder": "Oversized trui",
+  "zelfverzekerd en verleidelijk": "Zelfverzekerd",
+  "verlegen maar nieuwsgierig": "Verlegen",
+  "onderdanig en gewillig": "Onderdanig",
+  "uitdagend en brutaal": "Uitdagend",
+  "overgegeven, volledig in vertrouwen": "Overgegeven",
+  "hongerig en ongeduldig": "Hongerig",
+  "speels en plagend": "Speels & plagend",
+  "aarzelend, op het randje van bezwijken": "Aarzelend",
+  "afwachtend en gespannen": "Afwachtend",
+  "emotioneel kwetsbaar": "Kwetsbaar",
+  "triomfantelijk en machtig": "Triomfantelijk",
+  "verloren in fantasie": "Verloren in fantasie",
+  "los haar": "Los haar",
+  "opgestoken haar / paardenstaart": "Opgestoken haar",
+  "make-up, rode lippen": "Opgemaakt",
+  "naturel, net uit bed": "Naturel",
+  "parfum, net gedoucht": "Net gedoucht",
+  "bezweet, verhit": "Bezweet & verhit",
+  "vlechten": "Vlechten",
+  "glanzende huid in het licht": "Glanzende huid",
+  "zonnebruin": "Zonnebruin",
+  "bleek tegen het donker af": "Bleek tegen donker",
+  "elegante sleutelbeenderen ontbloot": "Sleutelbeenderen",
+  "gespierd en breed": "Gespierd & breed",
+  "slank en lenig": "Slank & lenig",
+  "lang en dominant aanwezig": "Lang & imposant",
+  "zacht en vol": "Zacht & vol",
+  "sterke handen": "Sterke handen",
+  "atletisch en stevig": "Atletisch",
+  "brede schouders": "Brede schouders",
+  "behaarde borst": "Behaarde borst",
+  "gladde huid": "Gladde huid",
+  "getatoeëerd": "Getatoeëerd",
+  "gespierde dijen": "Gespierde dijen",
+  "ranke vingers": "Ranke vingers",
+  "elegante nek": "Elegante nek",
+  "kalm en beheerst, alles onder controle": "Kalm & beheerst",
+  "intens en bezitterig": "Intens & bezitterig",
+  "donker, mysterieus, onvoorspelbaar": "Donker & mysterieus",
+  "teder maar dwingend": "Teder maar dwingend",
+  "ruw en recht-door-zee": "Ruw & direct",
+  "gevaarlijk-charmant": "Gevaarlijk-charmant",
+  "aanvoerend zonder een woord": "Aanvoerend, zwijgend",
+  "geduldig wachtend tot jij niet meer kan": "Geduldig wachtend",
+  "ongeduldig en hongerig": "Ongeduldig",
+  "afstandelijk-koel, en dat windt op": "Afstandelijk-koel",
+  "vol ingehouden energie": "Ingehouden energie",
+  "pak, stropdas losgetrokken": "Pak & stropdas",
+  "zwart t-shirt, simpel": "Zwart t-shirt",
+  "overhemd, mouwen opgerold": "Overhemd",
+  "naakt, ontbloot": "Naakt",
+  "handdoek, net uit de douche": "Handdoek",
+  "leer, donkere kleding": "Leer & donker",
+  "uniform": "Uniform",
+  "jeans en t-shirt": "Jeans & t-shirt",
+  "regenjas, net van buiten gekomen": "Regenjas",
+  "alleen een colbert, niets eronder": "Colbert only",
+  "arbeiders-/werkkleding (verfvlekken, stof)": "Arbeiderskleding",
+  "lage, diepe stem die bevelen fluistert": "Lage fluisterstem",
+  "zegt weinig, laat handen spreken": "Zwijgzaam, fysiek",
+  "dirty talk, zegt precies wat hij/zij gaat doen": "Dirty talk",
+  "prijst en beloont met woorden": "Prijzend",
+  "streng en kort, geen discussie": "Streng & kort",
+  "zwoel buitenlands accent (Frans, Italiaans, Spaans)": "Zwoel accent",
+  "hees, alsof net geschreeuwd": "Hees",
+  "ademend en intens": "Ademend & intens",
+  "zacht in je oor, bijna fluisterend": "Zacht in je oor",
+  "diepe lach die je doet huiveren": "Diepe lach",
+  "geblinddoekt": "Geblinddoekt",
+  "vastgebonden": "Vastgebonden",
+  "ijs & warmte": "Ijs & warmte",
+  "veren & zachte aanraking": "Veren & zacht",
+  "massage met olie": "Massage & olie",
+  "oorgefluister": "Oorgefluister",
+  "zachte muziek tegen de huid": "Muziek tegen huid",
+  "geur-stimulatie (parfum, kruiden)": "Geur-stimulatie",
+  "bevelen & gehoorzamen": "Bevelen",
+  "tease & denial": "Tease & denial",
+  "orgasmecontrole": "Orgasmecontrole",
+  "forced orgasm": "Gedwongen genot",
+  "roleplay": "Rollenspel",
+  "edging tot het bijna pijn doet": "Edging",
+  "permissie vragen om iets te doen": "Permissie vragen",
+  "beloningssysteem": "Beloningen",
+  "spanking": "Spanking",
+  "haar trekken": "Haar trekken",
+  "beet in de nek": "Bijten",
+  "choking (licht)": "Keel vasthouden",
+  "impact play": "Impact play",
+  "pet play": "Pet play",
+  "wax (warme druppels)": "Wax",
+  "speeksel-/keelspel": "Speeksel-spel",
+  "lingerie": "Lingerie",
+  "leer & latex": "Leer & latex",
+  "uniform / kostuum": "Uniform",
+  "naakt terwijl de ander gekleed is": "CFNM / CMNF",
+  "gemaskerd (gezicht half verborgen)": "Gemaskerd",
+  "hoge hakken": "Hoge hakken",
+  "leiband": "Leiband",
+  "steeds explicieter dirty talk": "Dirty talk",
+  "steeds minder kleding": "Langzaam uitkleden",
+  "verandering van positie of locatie": "Positiewisseling",
+  "hij/zij neemt meer controle": "Meer controle",
+  "ik smeek om meer": "Smeken",
+  "iets onverwachts gebeurt": "Verrassing",
+  "worden betrapt of bekeken": "Risico betrapt",
+  "toevoeging van iemand anders": "Iemand erbij",
+  "introductie van een speeltje": "Speeltje erbij",
+  "onverwachte kus uit het niets": "Onverwachte kus",
+  "iemand neemt het op": "Wordt opgenomen",
+  "instructies via telefoon of voicebericht": "Telefonische instructies"
+};
+
+function shuffleArray(arr) {
+  const a = arr.slice();
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function escapeHtml(s) {
+  return String(s)
+    .replace(/&/g, '&amp;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+}
+
+function renderChipPool(containerId, poolKey, dataKey, count) {
+  const container = document.getElementById(containerId);
+  if (!container) return;
+  const pool = CHIP_POOLS[poolKey] || [];
+  const picks = shuffleArray(pool).slice(0, count);
+  container.innerHTML = picks.map(value => {
+    const label = CHIP_LABELS[value] || value;
+    return `<div class="chip" data-value="${escapeHtml(value)}" onclick="toggleChip(this, '${dataKey}')">${escapeHtml(label)}</div>`;
+  }).join('');
+}
+
+function renderAllChips() {
+  for (const [containerId, cfg] of Object.entries(CHIP_LAYOUT)) {
+    renderChipPool(containerId, cfg.pool, cfg.key, cfg.show);
+  }
+}
 
 function selectOption(el, key) {
   const parent = el.closest('.options');
@@ -1222,6 +1559,7 @@ function generateResult() {
   if (join(dreamData.moment)) r += `Moment: ${join(dreamData.moment)}\n`;
   if (join(dreamData.light)) r += `Licht: ${join(dreamData.light)}\n`;
   if (join(dreamData.senses)) r += `Sfeer: ${join(dreamData.senses)}\n`;
+  if (dreamData.atmosphereExtra) r += `Extra sfeer: ${dreamData.atmosphereExtra}\n`;
   r += '\n';
 
   r += '💃 IK\n';
@@ -1247,6 +1585,7 @@ function generateResult() {
   r += '⚡ DYNAMIEK\n';
   r += `${dynLabels[dreamData.dynamic] || dreamData.dynamic || '—'}\n`;
   r += `Intensiteit: ${'●'.repeat(parseInt(dreamData.intensity))}${'○'.repeat(5 - parseInt(dreamData.intensity))}\n`;
+  if (dreamData.dynamicExtra) r += `Extra: ${dreamData.dynamicExtra}\n`;
   r += '\n';
 
   const kinks = join(dreamData.kinks);
@@ -1263,6 +1602,7 @@ function generateResult() {
   r += '📖 VERLOOP\n';
   if (opening) r += `Opening: ${opening}\n`;
   if (escalation) r += `Opbouw: ${escalation}\n`;
+  if (dreamData.escalationExtra) r += `Extra opbouw: ${dreamData.escalationExtra}\n`;
   if (climax) r += `Hoogtepunt: ${climax}\n`;
   r += '\n';
 
@@ -1597,6 +1937,7 @@ function restart() {
 
   document.querySelectorAll('.option.selected, .chip.selected').forEach(el => el.classList.remove('selected'));
   document.querySelectorAll('textarea, input[type="text"]').forEach(el => { if (el.id !== 'passwordInput') el.value = ''; });
+  renderAllChips();
   document.getElementById('intensitySlider').value = 3;
   document.getElementById('explicitSlider').value = 3;
   document.getElementById('lengthSlider').value = 2;
@@ -1624,6 +1965,7 @@ function restart() {
   updateUI();
 }
 
+renderAllChips();
 updateProgress();
 updateUI();
 </script>
